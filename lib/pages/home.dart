@@ -1,6 +1,9 @@
 import 'package:city_influencers_app/pages/signup.dart';
-import 'package:city_influencers_app/widgets/circle.dart';
+import 'package:city_influencers_app/widgets/campaign.dart';
+import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
+import 'package:city_influencers_app/widgets/homeBackground.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -11,67 +14,54 @@ class Home extends StatefulWidget {
 
 class _HomePage extends State<Home> {
   Color color1 = HexColor("#4C525C");
-
+  Color color2 = HexColor("#EBEBEB");
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            constraints: BoxConstraints(
-              maxHeight: 200,
-              minHeight: 200, //minimum height
-
-              minWidth: MediaQuery.of(context).size.width,
-              maxWidth: MediaQuery.of(context).size.width,
+        body: Column(
+            children: <Widget>[
+          Row(children: <Widget>[
+            HomeBackgroundWidget(),
+          ]),
+          Padding(
+            padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
+             child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Campagnes",
+              style: TextStyle(
+                  fontSize: 36, fontWeight: FontWeight.bold, color: color1),
             ),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/BackgroundHome.png"),
-                    fit: BoxFit.fill)),
-            child: Column(children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                    
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(5,5,0,0),
-                      child: IconButton(
-                        icon: const Icon(Icons.menu),
-                        color: color1,
-                        iconSize: 35 ,
-                        onPressed: () {},
+            
+          )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+          SizedBox(
+                    width: 60.w,
+          child: Padding(
+            padding:  EdgeInsets.only(left:3.5.w),
+            
+            child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search",
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: color2,
+                        contentPadding: const EdgeInsets.all(0),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
-                  
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0,20,20,0),
-                      child: Image.asset('assets/logo.png', height: 50),
-                    ),
-
-                ],
-              ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children:<Widget> [
-                        Padding(
-                          padding: const EdgeInsets.only(left:40),
-                          child: Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: const DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: AssetImage("assets/pfp.jpg")),
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 3.0,
-                                ),
-                              )),
-                        ),
-                        
-                      ],
-                    ),
-            ])));
+          ),),]),
+          const CampaignWidget(
+              imageurl: 'assets/biefstukFriet.jpg',
+              text: "Restaurant Bij Den Steak",
+              price: 250),
+          const CampaignWidget(
+              imageurl: 'assets/biefstukFriet.jpg', text: "Hey", price: 800)
+        ]));
   }
 }

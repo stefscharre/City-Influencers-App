@@ -1,8 +1,8 @@
 import 'package:city_influencers_app/pages/home.dart';
 import 'package:city_influencers_app/pages/signup.dart';
-import 'package:city_influencers_app/widgets/circle.dart';
+import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:flutter/material.dart';
-
+import 'package:responsive_sizer/responsive_sizer.dart';
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
   
@@ -45,8 +45,8 @@ class _LoginPage extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Image.asset('assets/logo.png', height: 50),
+            padding:  EdgeInsets.all(7.w),
+            child: Image.asset('assets/logo.png', height: 7.h),
           ),
           ],
         ),
@@ -57,18 +57,18 @@ class _LoginPage extends State<Login> {
       alignment: Alignment.center,
             
       child: Padding(
-            padding: const EdgeInsets.only(top: 50),
+            padding:  EdgeInsets.only(top: 2.h),
             
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 
-                const Padding(
-                  padding: EdgeInsets.only(right: 60),
-                  child: SizedBox(
-                    width: 250,
-                    child: Text(
+                 Padding(
+                  padding: EdgeInsets.only(right: 16.h),
+                  child:  SizedBox(
+                    width: 50.w,
+                    child: const Text(
                       "Welcome back",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -80,18 +80,18 @@ class _LoginPage extends State<Login> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 160),
+                SizedBox(height: 20.h),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: SizedBox(
-                    width: 320,
+                  padding:  EdgeInsets.only(bottom: 2.h),
+                  child:  SizedBox(
+                    width: 85.w,
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: "Your Email",
                         filled: true,
                         fillColor: color1,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 23),
+                        contentPadding:  EdgeInsets.symmetric(
+                            horizontal: 3.5.h, vertical:3.h),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(20)),
@@ -100,26 +100,26 @@ class _LoginPage extends State<Login> {
                   ),
                 ),
                 SizedBox(
-                    width: 320,
+                    width: 85.w,
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: "Password",
                         filled: true,
                         fillColor: color1,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 23),
+                        contentPadding:  EdgeInsets.symmetric(
+                            horizontal: 3.5.h, vertical: 3.h),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     )),
-                const SizedBox(height: 20),
+                SizedBox(height: 4.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.only(right: 80),
-                      child: Text(
+                     Padding(
+                      padding: EdgeInsets.only(right: 21.w),
+                      child:const Text(
                         "Sign In",
                         style: TextStyle(
                             fontSize: 32.0,
@@ -131,10 +131,10 @@ class _LoginPage extends State<Login> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 68),
+                      padding:  EdgeInsets.only(left: 20.w),
 
                         child: Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding:  EdgeInsets.all(2.w),
                           child: IconButton(
                             icon: const Icon(Icons.arrow_forward_sharp),
                             color: Colors.black,
@@ -145,12 +145,12 @@ class _LoginPage extends State<Login> {
                     
                   ],
                 ),
-                const SizedBox(height: 115),
+                SizedBox(height: 12.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(right: 50),
+                      padding:  EdgeInsets.only(right: 10.w),
                       child: TextButton(
                         style: TextButton.styleFrom(
                           textStyle: const TextStyle(
@@ -165,7 +165,7 @@ class _LoginPage extends State<Login> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 50),
+                      padding:  EdgeInsets.only(left: 10.w),
                       child: TextButton(
                         style: TextButton.styleFrom(
                           textStyle: const TextStyle(

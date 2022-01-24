@@ -1,6 +1,7 @@
 import 'package:city_influencers_app/pages/login.dart';
-import 'package:city_influencers_app/widgets/circle.dart';
+import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -20,15 +21,12 @@ class _SignUpPage extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     Color color1 = HexColor("#2A929E");
-    Color background = HexColor("#34B6C6");
-    Color color2 = HexColor("#4C525C");
     return Scaffold(
-        backgroundColor: background,
         body: Container(
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/BackgroundSignUp.png"),
+                    image: AssetImage("assets/BackgroundSignup.png"),
                     fit: BoxFit.fill)),
             child: Column(
               children: <Widget>[
@@ -36,24 +34,24 @@ class _SignUpPage extends State<SignUp> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.asset('assets/logo.png', height: 50),
+                      padding: EdgeInsets.all(7.w),
+                      child: Image.asset('assets/logo.png', height: 7.h),
                     ),
                   ],
                 ),
                 Container(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 50),
+                    padding: EdgeInsets.only(top: 2.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const Padding(
-                          padding: EdgeInsets.only(right: 60),
+                        Padding(
+                          padding: EdgeInsets.only(right: 16.h),
                           child: SizedBox(
-                            width: 250,
-                            child: Text(
+                            width: 50.w,
+                            child: const Text(
                               "Create account",
                               textAlign: TextAlign.left,
                               style: TextStyle(
@@ -65,11 +63,11 @@ class _SignUpPage extends State<SignUp> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 100),
+                        SizedBox(height: 9.h),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
+                          padding: EdgeInsets.only(bottom: 2.h),
                           child: SizedBox(
-                            width: 320,
+                            width: 85.w,
                             child: TextField(
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
@@ -79,8 +77,8 @@ class _SignUpPage extends State<SignUp> {
                                 ),
                                 filled: true,
                                 fillColor: color1,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 23),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 3.5.h, vertical: 3.h),
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(20)),
@@ -91,7 +89,7 @@ class _SignUpPage extends State<SignUp> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: SizedBox(
-                            width: 320,
+                            width: 85.w,
                             child: TextField(
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
@@ -101,8 +99,8 @@ class _SignUpPage extends State<SignUp> {
                                 ),
                                 filled: true,
                                 fillColor: color1,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 23),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 3.5.h, vertical: 3.h),
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(20)),
@@ -111,7 +109,7 @@ class _SignUpPage extends State<SignUp> {
                           ),
                         ),
                         SizedBox(
-                            width: 320,
+                            width: 85.w,
                             child: TextField(
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
@@ -121,20 +119,20 @@ class _SignUpPage extends State<SignUp> {
                                 ),
                                 filled: true,
                                 fillColor: color1,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 23),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 3.5.h, vertical: 3.h),
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(20)),
                               ),
                             )),
-                        const SizedBox(height: 32),
+                        SizedBox(height: 4.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            const Padding(
-                              padding: EdgeInsets.only(right: 73),
-                              child: Text(
+                            Padding(
+                              padding: EdgeInsets.only(right: 18.w),
+                              child: const Text(
                                 "Sign Up",
                                 style: TextStyle(
                                     fontSize: 32.0,
@@ -146,26 +144,24 @@ class _SignUpPage extends State<SignUp> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 62),
-
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.arrow_forward_sharp),
-                                    color: Colors.white,
-                                    onPressed: () {},
-                                  ),
+                              padding: EdgeInsets.only(left: 20.w),
+                              child: Padding(
+                                padding: EdgeInsets.all(2.w),
+                                child: IconButton(
+                                  icon: const Icon(Icons.arrow_forward_sharp),
+                                  color: Colors.white,
+                                  onPressed: () {},
                                 ),
                               ),
-                            
+                            ),
                           ],
                         ),
-                        const SizedBox(height: 170),
+                        SizedBox(height: 12.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(right: 55),
+                              padding: EdgeInsets.only(right: 10.w),
                               child: TextButton(
                                 style: TextButton.styleFrom(
                                   textStyle: const TextStyle(
