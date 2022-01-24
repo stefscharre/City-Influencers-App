@@ -13,6 +13,9 @@ class HomeBackgroundWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _handleDrawerButton() {
+    Scaffold.of(context).openDrawer();
+  }
     return Expanded(
         child: Container(
             constraints: BoxConstraints(
@@ -38,7 +41,7 @@ class HomeBackgroundWidget extends StatelessWidget {
                         icon: const Icon(Icons.menu),
                         color: color1,
                         iconSize: 10.w ,
-                        onPressed: () {},
+                       onPressed: _handleDrawerButton,
                       ),
                     ),
                   

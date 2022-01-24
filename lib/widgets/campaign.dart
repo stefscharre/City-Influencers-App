@@ -45,7 +45,7 @@ class CampaignWidget extends StatelessWidget {
              ),
       
         Padding(
-          padding:  EdgeInsets.fromLTRB(6.w,2.w,0,2.w),
+          padding:  EdgeInsets.fromLTRB(6.w,3.w,0,2.w),
           child: Text(       
             "€" +price.toString(),
             textAlign: TextAlign.center,
