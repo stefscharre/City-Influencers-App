@@ -15,6 +15,7 @@ class CityInfluencersApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home:  ResponsiveSizer(
    builder: (context, orientation, screenType) {

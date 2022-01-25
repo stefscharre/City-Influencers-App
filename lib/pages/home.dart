@@ -19,9 +19,10 @@ class _HomePage extends State<Home> {
  
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       
-      drawer: NavDrawer(),
+      drawer: const NavDrawer(),
         body: Stack(
           children: [
           Column(

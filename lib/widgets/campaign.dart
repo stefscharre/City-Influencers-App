@@ -1,3 +1,4 @@
+import 'package:city_influencers_app/pages/detailpage.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
@@ -12,9 +13,17 @@ class CampaignWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _navigateToDetail(int id) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const DetailPage()),
+    );
+    
+  }
     Color color1 = HexColor("#34B6C6");
     Color color2 = HexColor("#B8B8B8");
     return Padding(
+      
       padding: const EdgeInsets.fromLTRB(0,10,0,0),
       child: SizedBox(
           height: 18.h,      
@@ -79,7 +88,7 @@ class CampaignWidget extends StatelessWidget {
                     textStyle: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold)),
-                onPressed: () {},
+                onPressed: () {_navigateToDetail(1);},
 
               ),
         ),]
@@ -99,6 +108,5 @@ Image.asset(imageurl,fit:BoxFit.cover)
         
       )),
     );
-    
   }
 }
