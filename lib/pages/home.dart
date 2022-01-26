@@ -1,9 +1,12 @@
+import 'package:city_influencers_app/apis/city_api.dart';
+import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/pages/signup.dart';
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
 import 'package:city_influencers_app/widgets/campaign.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:city_influencers_app/widgets/homeBackground.dart';
 import 'package:city_influencers_app/widgets/sidemenu.dart';
+import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 class Home extends StatefulWidget {
@@ -16,7 +19,24 @@ class Home extends StatefulWidget {
 class _HomePage extends State<Home> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
- 
+  List<City> cityList = [];
+  int count = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _getcities();
+  }
+
+  void _getcities() {
+    CityApi.fetchCities().then((result) {
+      debugPrint(result.toString());
+      setState(() {
+        cityList = result;
+        count = result.length;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     
@@ -62,13 +82,13 @@ class _HomePage extends State<Home> {
                         ),
                       ),
             ),),]),
-            const CampaignWidget(
+            /* const CampaignWidget(
                 imageurl: 'assets/biefstukFriet.jpg',
                 text: "Restaurant Bij Den Steak",
                 price: 250),
             const CampaignWidget(
-                imageurl: 'assets/biefstukFriet.jpg', text: "Hey", price: 800),
-                
+                imageurl: 'assets/biefstukFriet.jpg', text: "Hey", price: 800), */
+          _userListItems()
           ]
           ),
 
@@ -82,5 +102,18 @@ class _HomePage extends State<Home> {
         
         
         );
+         
+  }
+  ListView _userListItems() {
+    return ListView.builder(
+      itemCount: count,
+      itemBuilder: (BuildContext context, int position) {
+        return Card(
+          color: Colors.white,
+          elevation: 2.0,
+          child: Text(cityList[position].naam),
+        );
+      },
+    );
   }
 }
