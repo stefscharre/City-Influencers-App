@@ -1,5 +1,5 @@
 class City {
-  final int id;
+  final String id;
   final String naam;
   final String postcode;
 
@@ -15,6 +15,7 @@ class City {
 
   Map<String, dynamic> toJson() =>
     {
+      'id': id,
       'naam': naam,
       'postcode': postcode,
 

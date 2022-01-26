@@ -1,22 +1,29 @@
 
 import 'dart:convert';
 
-import 'package:http/http.dart';
-
 import 'city.dart';
 
 class CityApiResponse {
-  final int code;
-  final String message;
-  final List<City> data;
+  CityApiResponse({
+    required this.code,
+    required this.message,
+    required this.data,
+  });
 
-  CityApiResponse({required this.code, required this.message, required this.data});
-  factory CityApiResponse.fromJson(Map<String, dynamic> responseData){
-  var cityArray = responseData['data'] as List;
-  List<City> cities = cityArray.map((e) => City.fromJson(e)).toList();
+  int code;
+  String message;
+  List<City> data;
 
-       return CityApiResponse(code: responseData['code'],message: responseData['message'],data: cities);
-             
-  }
+  factory CityApiResponse.fromJson(Map<String, dynamic> json) => CityApiResponse(
+    code: json["code"],
+    message: json["message"],
+    data: json["data"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "code": code,
+    "message": message,
+    "data": data,
+  };
 
 }
