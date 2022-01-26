@@ -14,10 +14,8 @@ class CityApi{
       Response res = await get(Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/cities"));
       debugPrint(res.body);
       if (res.statusCode == 200) {
-        //CityApiResponse body = jsonDecode(res.body);
         Map<String, dynamic> map = json.decode(res.body);
 
-        // ignore: unused_local_variable
         List<dynamic> data = map["data"];
 
         List<City> cities = data.map((dynamic item) => City.fromJson(item),
