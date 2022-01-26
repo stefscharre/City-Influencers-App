@@ -107,6 +107,8 @@ class _HomePage extends State<Home> {
   ListView _userListItems() {
     return ListView.builder(
       itemCount: count,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       itemBuilder: (BuildContext context, int position) {
         return Card(
           color: Colors.white,
