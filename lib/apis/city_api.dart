@@ -7,7 +7,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 class CityApi{
-    final String apiURL = "http://api-ci.westeurope.cloudapp.azure.com:8080/api/cities";
 
     static Future<List<City>> fetchCities() async {
     
@@ -28,9 +27,5 @@ class CityApi{
       } else {
         throw "Unable to retrieve cities.";
       }
-
-      
-
-
     }
   }

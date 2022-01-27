@@ -1,3 +1,4 @@
+import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/pages/home.dart';
 import 'package:city_influencers_app/pages/signup.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
@@ -138,7 +139,7 @@ class _LoginPage extends State<Login> {
                           child: IconButton(
                             icon: const Icon(Icons.arrow_forward_sharp),
                             color: Colors.black,
-                            onPressed: () {_navigateToHome();},
+                            onPressed: () {_navigateToHome();InfluencerApi().postLogin("stef_scharre", "testWachtwoord3");},
                           ),
                         ),
                       ),
