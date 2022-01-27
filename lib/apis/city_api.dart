@@ -11,7 +11,6 @@ class CityApi{
     static Future<List<City>> fetchCities() async {
     
       Response res = await get(Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/cities"));
-      debugPrint(res.body);
       if (res.statusCode == 200) {
         //CityApiResponse body = jsonDecode(res.body);
         Map<String, dynamic> map = json.decode(res.body);

@@ -139,7 +139,7 @@ class _LoginPage extends State<Login> {
                           child: IconButton(
                             icon: const Icon(Icons.arrow_forward_sharp),
                             color: Colors.black,
-                            onPressed: () {_navigateToHome();InfluencerApi().postLogin("stef_scharre", "testWachtwoord3");},
+                            onPressed: () {InfluencerApi().postLogin("stef_scharre", "testWachtwoord3").then((value) => _navigateToHome());},
                           ),
                         ),
                       ),
