@@ -9,6 +9,7 @@ import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -21,7 +22,11 @@ class _HomePage extends State<Home> {
   Color color2 = HexColor("#EBEBEB");
   List<City> cityList = [];
   int count = 0;
-
+  final storage =  const FlutterSecureStorage();
+  Future<String?> _getToken() async {
+      String? value = await storage.read(key: 'token');
+      return value;
+  }
   @override
   void initState() {
     super.initState();
@@ -39,6 +44,7 @@ class _HomePage extends State<Home> {
   }
   @override
   Widget build(BuildContext context) {
+
     
     return Scaffold(
       
@@ -55,7 +61,7 @@ class _HomePage extends State<Home> {
                child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Campagnes",
+                _getToken().toString(),
                 style: TextStyle(
                     fontSize: 36, fontWeight: FontWeight.bold, color: color1),
               ),
@@ -82,12 +88,7 @@ class _HomePage extends State<Home> {
                         ),
                       ),
             ),),]),
-            /* const CampaignWidget(
-                imageurl: 'assets/biefstukFriet.jpg',
-                text: "Restaurant Bij Den Steak",
-                price: 250),
-            const CampaignWidget(
-                imageurl: 'assets/biefstukFriet.jpg', text: "Hey", price: 800), */
+          
           _userListItems()
           ]
           ),
@@ -109,13 +110,19 @@ class _HomePage extends State<Home> {
       itemCount: count,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
+      
       itemBuilder: (BuildContext context, int position) {
-        return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: Text(cityList[position].naam),
+        return  Align(
+          alignment:position.isEven ? Alignment.center:Alignment.center,
+           child: CampaignWidget(
+                  imageurl: 'assets/biefstukFriet.jpg',
+                  text: cityList[position].naam,
+                  price: 250)
         );
       },
     );
   }
+  
+
+
 }
