@@ -11,7 +11,6 @@ import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -25,7 +24,6 @@ class _HomePage extends State<Home> {
   List<City> cityList = [];
   int count = 0;
  Influencer? influencer;
-  final storage =  const FlutterSecureStorage();
   @override
   void initState() {
     super.initState();
@@ -46,7 +44,6 @@ class _HomePage extends State<Home> {
   }
   void _getcities() {
     CityApi.fetchCities().then((result) {
-      debugPrint(result.toString());
       setState(() {
         cityList = result;
         count = result.length;
