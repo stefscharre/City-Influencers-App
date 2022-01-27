@@ -1,5 +1,7 @@
 import 'package:city_influencers_app/apis/city_api.dart';
+import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/models/city.dart';
+import 'package:city_influencers_app/models/influencer.dart';
 import 'package:city_influencers_app/pages/signup.dart';
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
 import 'package:city_influencers_app/widgets/campaign.dart';
@@ -22,17 +24,26 @@ class _HomePage extends State<Home> {
   Color color2 = HexColor("#EBEBEB");
   List<City> cityList = [];
   int count = 0;
+ Influencer? influencer;
   final storage =  const FlutterSecureStorage();
-  Future<String?> _getToken() async {
-      String? value = await storage.read(key: 'token');
-      return value;
-  }
   @override
   void initState() {
     super.initState();
-    _getcities();
-  }
+    setState(() {
+          influencer= Influencer(id: "", voornaam: "", familienaam: "", geslacht: "", gebruikersnaam: "Stef", profielfoto: "", adres: "", postcode: "", stad: "", geboortedatum: "", telefoonnummer: "", emailadres: "", gebruikersnaaminstagram: "", gebruikersnaamfacebook: "", gebruikersnaamtiktok: "", aantalvolgersinstagram: "", aantalvolgersfacebook: "", aantalvolgerstiktok: "", infoovervolgers: "", badge: "", aantalpunten: "", categories: []);
 
+    });
+    _getcities();
+    _getinfluencer();
+  }
+  void _getinfluencer(){
+      InfluencerApi().getInfluencer().then((result){
+
+          setState(() {
+      influencer = result;
+      });
+      });
+  }
   void _getcities() {
     CityApi.fetchCities().then((result) {
       debugPrint(result.toString());
@@ -61,7 +72,7 @@ class _HomePage extends State<Home> {
                child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                _getToken().toString(),
+                influencer!.gebruikersnaam ,
                 style: TextStyle(
                     fontSize: 36, fontWeight: FontWeight.bold, color: color1),
               ),
