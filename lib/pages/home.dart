@@ -2,8 +2,10 @@ import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/models/influencer.dart';
+
 import 'package:city_influencers_app/models/influencerApiResponse.dart';
 import 'package:city_influencers_app/pages/signup.dart';
+
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
 import 'package:city_influencers_app/widgets/campaign.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
@@ -44,6 +46,7 @@ class _HomePage extends State<Home> {
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
 
