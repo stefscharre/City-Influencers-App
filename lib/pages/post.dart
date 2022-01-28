@@ -89,9 +89,9 @@ class _PostPage extends State<Post> {
   _post() {
     TextStyle? textStyle = Theme.of(context).textTheme.bodyText1;
 
-    adressController.text = influencer!.adres; // show the user info using the TextEditingController's
+    /* adressController.text = influencer!.adres; // show the user info using the TextEditingController's
     postcodeController.text = influencer!.postcode;
-    stadController.text = influencer!.stad;
+    stadController.text = influencer!.stad; */
 
     return Padding(
       padding: const EdgeInsets.all(10.0),

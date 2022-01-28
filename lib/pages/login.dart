@@ -14,12 +14,22 @@ class Login extends StatefulWidget {
 class _LoginPage extends State<Login> {
  Color color1 = HexColor("#E4E4E4");
  Color color2 = HexColor("#34B6C6");
+ final nameController = TextEditingController();
+ final passwordController = TextEditingController();
+ late var errorMessage = "";
   void _navigateToSignUp() async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const SignUp()),
     );
     
+  }
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    nameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
   void _navigateToHome() async {
     await Navigator.push(
@@ -81,12 +91,17 @@ class _LoginPage extends State<Login> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 15.h),
+                SizedBox(height: 5.h, child: Text(errorMessage,style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold, color: Colors.red),
+                      ),),
+                
                 Padding(
                   padding:  EdgeInsets.only(bottom: 2.h),
                   child:  SizedBox(
                     width: 85.w,
                     child: TextField(
+                      controller: nameController,
                       decoration: InputDecoration(
                         hintText: "Your Email",
                         filled: true,
@@ -103,6 +118,7 @@ class _LoginPage extends State<Login> {
                 SizedBox(
                     width: 85.w,
                     child: TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         hintText: "Password",
                         filled: true,
@@ -139,7 +155,16 @@ class _LoginPage extends State<Login> {
                           child: IconButton(
                             icon: const Icon(Icons.arrow_forward_sharp),
                             color: Colors.black,
-                            onPressed: () {InfluencerApi().postLogin("stef_scharre", "testWachtwoord3").then((value) => _navigateToHome());},
+                            onPressed: () {InfluencerApi().postLogin(nameController.text, passwordController.text).then((value) => {
+                              if(value.token==""){
+                                setState((){
+                                  errorMessage="Wrong username or password";
+                                })
+                              }
+                              else{
+                                _navigateToHome()
+                              }
+                            });},
                           ),
                         ),
                       ),
@@ -190,7 +215,4 @@ class _LoginPage extends State<Login> {
         )));
   }
 }
-
-
-
 

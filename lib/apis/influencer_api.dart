@@ -6,6 +6,7 @@ import 'package:city_influencers_app/models/influencerApiResponse.dart';
 import 'package:city_influencers_app/models/login/login_data.dart';
 import 'package:city_influencers_app/models/login/token_validation_response.dart';
 import 'package:city_influencers_app/models/login/tokenvalidation.dart';
+import 'package:city_influencers_app/pages/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 
@@ -34,18 +35,24 @@ class InfluencerApi {
       Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/login"),
       body: login,
     );
+    print(res.body);
     if (res.statusCode == 200) {
       Map<String, dynamic> map = json.decode(res.body);
+      print(map.values);
+      if (map.values.last == "AuthCredsWrong") {
+        print("hey");
+        return LoginData(token: "", creationtime: "", expiretime: "");
+      } else {
+        LoginData data = LoginData.fromJson(map.values.last);
 
-      LoginData data = LoginData.fromJson(map.values.last);
+        await secureStorage.write(
+            key: 'token',
+            value: data.token,
+            iOptions: _getIOSOptions(),
+            aOptions: _getAndroidOptions());
 
-      await secureStorage.write(
-          key: 'token',
-          value: data.token,
-          iOptions: _getIOSOptions(),
-          aOptions: _getAndroidOptions());
-
-      return data;
+        return data;
+      }
     } else {
       throw "Unable to retrieve influencer.";
     }
@@ -97,7 +104,6 @@ class InfluencerApi {
                 final responseJson = json.decode(res.body);
                 InfluencerApiResponse influencer =
                     InfluencerApiResponse.fromJson(responseJson);
-
                 Influencer influencerData = Influencer(
                     id: influencer.data[0]["id"],
                     voornaam: influencer.data[0]["voornaam"],
@@ -121,7 +127,8 @@ class InfluencerApi {
                         ["aantalvolgersinstagram"],
                     aantalvolgersfacebook: influencer.data[0]
                         ["aantalvolgersfacebook"],
-                    aantalvolgerstiktok: influencer.data[0]["aantalvolgerstiktok"],
+                    aantalvolgerstiktok: influencer.data[0]
+                        ["aantalvolgerstiktok"],
                     infoovervolgers: influencer.data[0]["infoovervolgers"],
                     badge: influencer.data[0]["badge"],
                     aantalpunten: influencer.data[0]["aantalpunten"],
