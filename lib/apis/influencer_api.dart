@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:city_influencers_app/models/auth_token_response.dart';
 import 'package:city_influencers_app/models/influencer.dart';
+import 'package:city_influencers_app/models/influencerApiResponse.dart';
 import 'package:city_influencers_app/models/login/login_data.dart';
 import 'package:city_influencers_app/models/login/token_validation_response.dart';
 import 'package:city_influencers_app/models/login/tokenvalidation.dart';
@@ -15,12 +16,12 @@ class InfluencerApi {
   final secureStorage = new FlutterSecureStorage();
 
   IOSOptions _getIOSOptions() => const IOSOptions(
-    accessibility: IOSAccessibility.first_unlock,
-  );
+        accessibility: IOSAccessibility.first_unlock,
+      );
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
-    encryptedSharedPreferences: true,
-  );
+        encryptedSharedPreferences: true,
+      );
 
   Future<LoginData> postLogin(String username, String password) async {
     final login = {
@@ -34,18 +35,16 @@ class InfluencerApi {
       body: login,
     );
     if (res.statusCode == 200) {
-      //CityApiResponse body = jsonDecode(res.body);
       Map<String, dynamic> map = json.decode(res.body);
-      debugPrint(map.toString());
 
-      map.forEach((k, v) => debugPrint('$k: $v'));
-
-      debugPrint("testing map value: " + map.values.toString());
       LoginData data = LoginData.fromJson(map.values.last);
 
-      debugPrint("token: " + data.token);
-      await secureStorage.write(key: 'token', value: data.token, iOptions: _getIOSOptions(), aOptions: _getAndroidOptions());
-      
+      await secureStorage.write(
+          key: 'token',
+          value: data.token,
+          iOptions: _getIOSOptions(),
+          aOptions: _getAndroidOptions());
+
       return data;
     } else {
       throw "Unable to retrieve influencer.";
@@ -53,13 +52,13 @@ class InfluencerApi {
   }
 
   Future<String> readSecureToken() async {
-
-  
-
     String value = "";
     try {
-      value = (await secureStorage.read(key: 'token', iOptions: _getIOSOptions(), aOptions: _getAndroidOptions()))??"test";
-      debugPrint("value: " + value);
+      value = (await secureStorage.read(
+              key: 'token',
+              iOptions: _getIOSOptions(),
+              aOptions: _getAndroidOptions())) ??
+          "test";
     } catch (e) {
       print(e);
     }
@@ -67,60 +66,111 @@ class InfluencerApi {
     return value;
   }
 
-  Future<Influencer?> getInfluencer() async {
+  Future<Influencer?> getInfluencer() {
+    return readSecureToken().then((String result) async {
+      try {
+        String token = result;
+        if (token != null) {
+          Map<String, String> headers = {
+            "Authorization": "Bearer $token",
+          };
 
-     await readSecureToken().then((String result) async {
-      String token = result;
-
-      debugPrint("secure token: " + token);
-
-if (token != null) {
-
-      Map<String, String> headers = {
-        "Authorization": "Bearer $token",
-      };
-      
-      Response res = await get(        
-        Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/me"),
-        headers: headers
-      );
-      if (res.statusCode == 200) {
-        //CityApiResponse body = jsonDecode(res.body);
-        Map<String, dynamic> map = json.decode(res.body);
-
-        map.forEach((k, v) => debugPrint('$k: $v'));
-
-        TokenValidation data = TokenValidation.fromJson(map["data"]);
-        String influencerid = data.id;
-
-
-        if (influencerid != "") {
           Response res = await get(
-            Uri.parse(
-                "http://api-ci.westeurope.cloudapp.azure.com:8080/api/influencers/" +
-                    influencerid),
-            headers: headers
-          );
-          debugPrint(res.body);
+              Uri.parse(
+                  "http://api-ci.westeurope.cloudapp.azure.com:8080/api/me"),
+              headers: headers);
           if (res.statusCode == 200) {
             Map<String, dynamic> map = json.decode(res.body);
 
-            Influencer influencer = map["data"];
+            //map.forEach((k, v) => debugPrint('$k: $v'));
 
-            return influencer;
-          } else {
-            throw "Unable to retrieve influencer.";
+            TokenValidation data = TokenValidation.fromJson(map["data"]);
+            String influencerid = data.id;
+
+            if (influencerid != "") {
+              Response res = await get(
+                  Uri.parse(
+                      "http://api-ci.westeurope.cloudapp.azure.com:8080/api/influencers/" +
+                          influencerid),
+                  headers: headers);
+              if (res.statusCode == 200) {
+                final responseJson = json.decode(res.body);
+                InfluencerApiResponse influencer =
+                    InfluencerApiResponse.fromJson(responseJson);
+
+                Influencer influencerData = Influencer(
+                    id: influencer.data[0]["id"],
+                    voornaam: influencer.data[0]["voornaam"],
+                    familienaam: influencer.data[0]["familienaam"],
+                    geslacht: influencer.data[0]["geslacht"],
+                    gebruikersnaam: influencer.data[0]["gebruikersnaam"],
+                    profielfoto: influencer.data[0]["profielfoto"],
+                    adres: influencer.data[0]["adres"],
+                    postcode: influencer.data[0]["postcode"],
+                    stad: influencer.data[0]["stad"],
+                    geboortedatum: influencer.data[0]["geboortedatum"],
+                    telefoonnummer: influencer.data[0]["telefoonnummer"],
+                    emailadres: influencer.data[0]["emailadres"],
+                    gebruikersnaaminstagram: influencer.data[0]
+                        ["gebruikersnaaminstagram"],
+                    gebruikersnaamfacebook: influencer.data[0]
+                        ["gebruikersnaamfacebook"],
+                    gebruikersnaamtiktok: influencer.data[0]
+                        ["gebruikersnaamtiktok"],
+                    aantalvolgersinstagram: influencer.data[0]
+                        ["aantalvolgersinstagram"],
+                    aantalvolgersfacebook: influencer.data[0]
+                        ["aantalvolgersfacebook"],
+                    aantalvolgerstiktok: influencer.data[0]["aantalvolgerstiktok"],
+                    infoovervolgers: influencer.data[0]["infoovervolgers"],
+                    badge: influencer.data[0]["badge"],
+                    aantalpunten: influencer.data[0]["aantalpunten"],
+                    categories: []);
+
+                return influencerData;
+              }
+            }
           }
-          
         }
-      } else {
-        throw "Unable to retrieve influencer.";
+      } catch (e) {
+        print("this catch");
+        print(e);
+        rethrow;
       }
-    } else {
-      throw "no token";
+    });
+  }
+
+  Future<Influencer> fetchInfluencerData() {
+    try {} catch (e) {
+      print(e);
+
+      Future<Influencer> inf = Influencer(
+          id: "",
+          voornaam: "",
+          familienaam: "",
+          geslacht: "",
+          gebruikersnaam: "",
+          profielfoto: "",
+          adres: "",
+          postcode: "",
+          stad: "",
+          geboortedatum: "",
+          telefoonnummer: "",
+          emailadres: "",
+          gebruikersnaaminstagram: "",
+          gebruikersnaamfacebook: "",
+          gebruikersnaamtiktok: "",
+          aantalvolgersinstagram: "",
+          aantalvolgersfacebook: "",
+          aantalvolgerstiktok: "",
+          infoovervolgers: "",
+          badge: "",
+          aantalpunten: "",
+          categories: []) as Future<Influencer>;
+
+      return inf;
     }
 
-    });
-    
+    throw "Latest throw";
   }
 }

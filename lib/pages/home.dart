@@ -2,6 +2,10 @@ import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/models/influencer.dart';
+
+import 'package:city_influencers_app/models/influencerApiResponse.dart';
+import 'package:city_influencers_app/pages/signup.dart';
+
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
 import 'package:city_influencers_app/widgets/campaign.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
@@ -22,25 +26,18 @@ class _HomePage extends State<Home> {
   Color color2 = HexColor("#EBEBEB");
   List<City> cityList = [];
   int count = 0;
- Influencer? influencer;
+  late Future<Influencer?> influencerData;
   @override
   void initState() {
     super.initState();
-    setState(() {
-          influencer= Influencer(id: "", voornaam: "", familienaam: "", geslacht: "", gebruikersnaam: "Stef", profielfoto: "", adres: "", postcode: "", stad: "", geboortedatum: "", telefoonnummer: "", emailadres: "", gebruikersnaaminstagram: "", gebruikersnaamfacebook: "", gebruikersnaamtiktok: "", aantalvolgersinstagram: "", aantalvolgersfacebook: "", aantalvolgerstiktok: "", infoovervolgers: "", badge: "", aantalpunten: "", categories: []);
-
-    });
+   // _getinfluencer();
     _getcities();
-    _getinfluencer();
-  }
-  void _getinfluencer(){
-      InfluencerApi().getInfluencer().then((result){
 
-          setState(() {
-      influencer = result;
-      });
-      });
+    influencerData = InfluencerApi().getInfluencer();
+
+
   }
+ 
   void _getcities() {
     CityApi.fetchCities().then((result) {
       setState(() {
@@ -68,11 +65,22 @@ class _HomePage extends State<Home> {
               padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
                child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                influencer!.gebruikersnaam ,
-                style: TextStyle(
-                    fontSize: 36, fontWeight: FontWeight.bold, color: color1),
-              ),
+              child: FutureBuilder<Influencer?> (
+                future: influencerData,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(
+                      snapshot.data!.voornaam.toString(),
+                      style: TextStyle(
+                          fontSize: 36, fontWeight: FontWeight.bold, color: color1),
+                      );
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+                  print(snapshot.data);
+                  return const CircularProgressIndicator();
+                }
+              )
               
             )),
             Row(

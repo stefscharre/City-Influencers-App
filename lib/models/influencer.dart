@@ -2,48 +2,48 @@ import 'package:flutter/foundation.dart';
 
 class Influencer {
   final String id;
-  final String voornaam;
-  final String familienaam;
-  final String geslacht;
+  final String? voornaam;
+  final String? familienaam;
+  final String? geslacht;
   final String gebruikersnaam;
-  final String profielfoto;
-  final String adres;
-  final String postcode;
-  final String stad;
-  final String geboortedatum;
-  final String telefoonnummer;
+  final String? profielfoto;
+  final String? adres;
+  final String? postcode;
+  final String? stad;
+  final String? geboortedatum;
+  final String? telefoonnummer;
   final String emailadres;
-  final String gebruikersnaaminstagram;
-    final String gebruikersnaamfacebook;
-      final String gebruikersnaamtiktok;
-  final String aantalvolgersinstagram;
-  final String aantalvolgersfacebook;
-  final String aantalvolgerstiktok;
+  final String? gebruikersnaaminstagram;
+    final String? gebruikersnaamfacebook;
+      final String? gebruikersnaamtiktok;
+  final String? aantalvolgersinstagram;
+  final String? aantalvolgersfacebook;
+  final String? aantalvolgerstiktok;
 
-  final String infoovervolgers;
+  final String? infoovervolgers;
   final String badge;
   final String aantalpunten;
   final List<String> categories;
 
 
   Influencer({required this.id, required this.voornaam,
-  required this.familienaam, 
-  required this.geslacht, 
+  this.familienaam, 
+  this.geslacht, 
   required this.gebruikersnaam, 
-  required this.profielfoto, 
-  required this.adres, 
-  required this.postcode, 
-  required this.stad, 
-  required this.geboortedatum, 
-  required this.telefoonnummer, 
+  this.profielfoto, 
+  this.adres, 
+  this.postcode, 
+  this.stad, 
+  this.geboortedatum, 
+  this.telefoonnummer, 
   required this.emailadres, 
-  required this.gebruikersnaaminstagram, 
-  required this.gebruikersnaamfacebook, 
-  required this.gebruikersnaamtiktok, 
-  required this.aantalvolgersinstagram, 
-  required this.aantalvolgersfacebook, 
-  required this.aantalvolgerstiktok, 
-  required this.infoovervolgers, 
+  this.gebruikersnaaminstagram, 
+  this.gebruikersnaamfacebook, 
+  this.gebruikersnaamtiktok, 
+  this.aantalvolgersinstagram, 
+  this.aantalvolgersfacebook, 
+  this.aantalvolgerstiktok, 
+  this.infoovervolgers, 
   required this.badge, 
   required this.aantalpunten, 
   required this.categories, 
