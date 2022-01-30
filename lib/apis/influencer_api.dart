@@ -57,6 +57,28 @@ class InfluencerApi {
       throw "Unable to retrieve influencer.";
     }
   }
+  Future<Influencer> postInfluencer(String email, String username, String password) async {
+    final login = {
+      'type': "influencer",
+      'username': username,
+      'password': password,
+      'email': email,
+      
+    };
+
+    Response res = await post(
+      Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/register"),
+      body: login,
+    );
+    print(res.body);
+    if (res.statusCode == 200) {
+
+        return  Influencer.fromJson(jsonDecode(res.body));
+      
+    } else {
+      throw "Unable to make influencer.";
+    }
+  }
 
   Future<String> readSecureToken() async {
     String value = "";
