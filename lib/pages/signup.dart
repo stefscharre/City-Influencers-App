@@ -151,7 +151,7 @@ class _SignUpPage extends State<SignUp> {
                                 child: IconButton(
                                   icon: const Icon(Icons.arrow_forward_sharp),
                                   color: Colors.white,
-                                  onPressed: () {InfluencerApi().postInfluencer("stefscharre@hotmail.be", "descharre", "scharre123");_navigateToLogIn();}
+                                  onPressed: () {InfluencerApi().postInfluencer("stefscharre@hotmail.com", "scharre", "scharre123");_navigateToLogIn();}
                                 ),
                               ),
                             ),

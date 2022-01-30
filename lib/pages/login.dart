@@ -103,7 +103,7 @@ class _LoginPage extends State<Login> {
                     child: TextField(
                       controller: nameController,
                       decoration: InputDecoration(
-                        hintText: "Your Email",
+                        hintText: "Username",
                         filled: true,
                         fillColor: color1,
                         contentPadding:  EdgeInsets.symmetric(
