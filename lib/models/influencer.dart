@@ -21,9 +21,9 @@ class Influencer {
   final String? aantalvolgerstiktok;
 
   final String? infoovervolgers;
-  final String badge;
-  final String aantalpunten;
-  final List<String> categories;
+  final String? badge;
+  final String? aantalpunten;
+  final List<String>? categories;
 
 
   Influencer({required this.id, required this.voornaam,
@@ -44,9 +44,9 @@ class Influencer {
   this.aantalvolgersfacebook, 
   this.aantalvolgerstiktok, 
   this.infoovervolgers, 
-  required this.badge, 
-  required this.aantalpunten, 
-  required this.categories, 
+   this.badge, 
+   this.aantalpunten, 
+   this.categories, 
 });
   
   factory Influencer.fromJson(Map<String, dynamic> json) {

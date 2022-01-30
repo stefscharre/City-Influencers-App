@@ -1,3 +1,4 @@
+import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/pages/login.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:flutter/material.dart';
@@ -150,7 +151,7 @@ class _SignUpPage extends State<SignUp> {
                                 child: IconButton(
                                   icon: const Icon(Icons.arrow_forward_sharp),
                                   color: Colors.white,
-                                  onPressed: () {},
+                                  onPressed: () {InfluencerApi().postInfluencer("stefscharre@hotmail.be", "descharre", "scharre123");_navigateToLogIn();}
                                 ),
                               ),
                             ),

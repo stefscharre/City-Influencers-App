@@ -30,7 +30,7 @@ class _ProfilePage extends State<Profile> {
   TextEditingController stadController = TextEditingController();
   TextEditingController nummerController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
+  late Future<Influencer?> influencerData;
   @override
   void initState() {
     super.initState();
@@ -106,12 +106,12 @@ class _ProfilePage extends State<Profile> {
   _userDetails() {
     TextStyle? textStyle = Theme.of(context).textTheme.bodyText1;
 
-    adressController.text = influencer!
-        .adres; // show the user info using the TextEditingController's
+    
+    /* adressController.text = influencer!.adres; // show the user info using the TextEditingController's
     postcodeController.text = influencer!.postcode;
     stadController.text = influencer!.stad;
     nummerController.text = influencer!.telefoonnummer;
-    emailController.text = influencer!.emailadres;
+    emailController.text = influencer!.emailadres; */
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
