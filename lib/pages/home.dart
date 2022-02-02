@@ -70,7 +70,7 @@ class _HomePage extends State<Home> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Text(
-                      snapshot.data!.voornaam.toString(),
+                      snapshot.data!.gebruikersnaam.toString(),
                       style: TextStyle(
                           fontSize: 36, fontWeight: FontWeight.bold, color: color1),
                       );

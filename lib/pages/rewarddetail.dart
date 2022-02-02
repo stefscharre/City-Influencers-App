@@ -2,7 +2,6 @@ import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/models/influencer.dart';
-import 'package:city_influencers_app/pages/rewarddetail.dart';
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
 import 'package:city_influencers_app/widgets/campaign.dart';
 import 'package:city_influencers_app/widgets/reward_widget.dart';
@@ -14,16 +13,18 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:image_picker/image_picker.dart';
 
-class Reward extends StatefulWidget {
-  const Reward({Key? key}) : super(key: key);
+class RewardDetail extends StatefulWidget {
+  const RewardDetail({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _RewardPage();
+  State<StatefulWidget> createState() => _RewardDetailPage();
 }
 
-class _RewardPage extends State<Reward> {
+class _RewardDetailPage extends State<RewardDetail> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
+  Color color3 = HexColor("#34B6C6");
+  
   Influencer? influencer;
   TextEditingController adressController = TextEditingController();
   TextEditingController postcodeController = TextEditingController();
@@ -34,6 +35,7 @@ class _RewardPage extends State<Reward> {
     setState(() {
       influencer = Influencer(
           id: "",
+            wachtwoord: "",
           voornaam: "",
           familienaam: "",
           geslacht: "",
@@ -81,27 +83,74 @@ class _RewardPage extends State<Reward> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Rewards",
+                    "Reward",
                     style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
                         color: color1),
                   ),
                 )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RewardWidget(),
-                RewardWidget(),
-              ],
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "A lommel voucher of €250",
+                style: TextStyle(
+                    fontSize: 24, fontWeight: FontWeight.bold, color: color1),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RewardWidget(),
-                RewardWidget(),
-              ],
-            )
+            Padding(
+                padding: EdgeInsets.fromLTRB(5.w,5.w,0,0),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Description:",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: color1),
+                    ))),
+            Padding(
+                padding: EdgeInsets.fromLTRB(5.w,2.w,0,5.w),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "A lommel worth €20 to go shopping",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                          color: color1),
+                    ))),
+                     ElevatedButton(
+            
+            child: const Text('Get Reward'),
+                 style: ElevatedButton.styleFrom(
+                    primary: color3,
+                    padding:  EdgeInsets.symmetric(horizontal: 6.w),
+                    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(25), // <-- Radius
+    ),
+                    textStyle: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold)),
+                onPressed: () {},
+
+              ),
+        
+          Padding(
+            padding:  EdgeInsets.only(top: 5.w),
+            child: SizedBox(
+            height: 60.w,      
+            width: 60.w,
+
+        child: Card(
+      shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+       
+
+        
+      )),
+          ),
           ]),
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
         ]));

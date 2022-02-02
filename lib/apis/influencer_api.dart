@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:city_influencers_app/models/auth_token_response.dart';
 import 'package:city_influencers_app/models/influencer.dart';
 import 'package:city_influencers_app/models/influencerApiResponse.dart';
@@ -7,6 +5,7 @@ import 'package:city_influencers_app/models/login/login_data.dart';
 import 'package:city_influencers_app/models/login/token_validation_response.dart';
 import 'package:city_influencers_app/models/login/tokenvalidation.dart';
 import 'package:city_influencers_app/pages/login.dart';
+import 'package:city_influencers_app/pages/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 
@@ -14,7 +13,7 @@ import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class InfluencerApi {
-  final secureStorage = new FlutterSecureStorage();
+  final secureStorage = const FlutterSecureStorage();
 
   IOSOptions _getIOSOptions() => const IOSOptions(
         accessibility: IOSAccessibility.first_unlock,
@@ -23,7 +22,6 @@ class InfluencerApi {
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true,
       );
-
   Future<LoginData> postLogin(String username, String password) async {
     final login = {
       'username': username,
@@ -57,27 +55,86 @@ class InfluencerApi {
       throw "Unable to retrieve influencer.";
     }
   }
-  Future<Influencer> postInfluencer(String email, String username, String password) async {
-    final login = {
+
+  Future<Influencer> postInfluencer(
+      String email, String username, String password) async {
+    final singup = {
       'type': "influencer",
       'username': username,
       'password': password,
       'email': email,
-      
     };
 
     Response res = await post(
-      Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/register"),
-      body: login,
+      Uri.parse(
+          "http://api-ci.westeurope.cloudapp.azure.com:8080/api/register"),
+      body: singup,
     );
     print(res.body);
     if (res.statusCode == 200) {
-
-        return  Influencer.fromJson(jsonDecode(res.body));
-      
+      postLogin(username, password);
+      return Influencer.fromJson(jsonDecode(res.body));
     } else {
       throw "Unable to make influencer.";
     }
+  }
+
+  Future<Influencer?> updateInfluencer(Influencer influencer) {
+    final update = {
+      'id': influencer.id,
+      'wachtwoord': influencer.wachtwoord,
+      'username': influencer.gebruikersnaam,
+      'firstname': influencer.voornaam,
+      'lastname': influencer.familienaam,
+      'adress': influencer.adres,
+      'postcode':influencer.postcode,
+      'city': influencer.stad,
+      'dateofbirth': influencer.geboortedatum,
+      'phonenumber': influencer.telefoonnummer,
+      'email': influencer.emailadres,
+      'gender': influencer.geslacht,
+      'usernameinstagram':influencer.gebruikersnaaminstagram,
+      'usernamefacebook': influencer.gebruikersnaamfacebook,
+      'totalfollowersinstagram':influencer.aantalvolgersinstagram,
+      'totalfollowersfacebook': influencer.aantalvolgersfacebook,
+      'totalfollowerstiktok': influencer.aantalvolgerstiktok,
+      'infoaboutfollowers': influencer.infoovervolgers,
+      'badge': influencer.badge,
+      'totalpoints': influencer.aantalpunten,
+
+    };
+    print(update);
+    return readSecureToken().then((String result) async {
+      try {
+        String token = result;
+        if (token != null) {
+          Map<String, String> headers = {
+            "Content-Type":"application/json",
+            "Authorization": "Bearer $token",
+          };
+        print(token);
+        print(update['id']);
+        print(influencer.adres);
+          Response res = await put(
+            Uri.parse(
+                "http://api-ci.westeurope.cloudapp.azure.com:8080/api/accounts"),
+                body:jsonEncode(update),
+            headers: headers
+            
+          );
+          if (res.statusCode == 200) {  
+            print(res.body);    
+           
+          } else {
+            throw Exception('Failed to update user');
+          }
+        }
+      } catch (e) {
+        print("this catch");
+        print(e);
+        rethrow;
+      }
+    });
   }
 
   Future<String> readSecureToken() async {
@@ -128,6 +185,7 @@ class InfluencerApi {
                     InfluencerApiResponse.fromJson(responseJson);
                 Influencer influencerData = Influencer(
                     id: influencer.data[0]["id"],
+                    wachtwoord: influencer.data[0]["wachtwoord"],
                     voornaam: influencer.data[0]["voornaam"],
                     familienaam: influencer.data[0]["familienaam"],
                     geslacht: influencer.data[0]["geslacht"],
@@ -175,6 +233,7 @@ class InfluencerApi {
 
       Future<Influencer> inf = Influencer(
           id: "",
+          wachtwoord: "",
           voornaam: "",
           familienaam: "",
           geslacht: "",

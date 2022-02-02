@@ -22,7 +22,7 @@ class Profile extends StatefulWidget {
 class _ProfilePage extends State<Profile> {
   Color color1 = HexColor("#34B6C6");
   Color color2 = HexColor("#EBEBEB");
-  
+
   Color color3 = HexColor("#4C525C");
   Influencer? influencer;
   TextEditingController adressController = TextEditingController();
@@ -30,17 +30,18 @@ class _ProfilePage extends State<Profile> {
   TextEditingController stadController = TextEditingController();
   TextEditingController nummerController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  late Future<Influencer?> influencerData;
+
   @override
   void initState() {
     super.initState();
     setState(() {
       influencer = Influencer(
           id: "",
+          wachtwoord: "",
           voornaam: "",
           familienaam: "",
           geslacht: "",
-          gebruikersnaam: "Stef",
+          gebruikersnaam: "",
           profielfoto: "",
           adres: "",
           postcode: "",
@@ -63,6 +64,7 @@ class _ProfilePage extends State<Profile> {
   }
 
   void _getinfluencer() {
+    print("doet het");
     InfluencerApi().getInfluencer().then((result) {
       setState(() {
         influencer = result;
@@ -81,48 +83,61 @@ class _ProfilePage extends State<Profile> {
             ]),
             _userDetails(),
             Padding(
-              padding:  EdgeInsets.only(top: 1.h),
+              padding: EdgeInsets.only(top: 1.h),
               child: ElevatedButton(
-              
-              child: const Text('Lees meer'),
-                   style: ElevatedButton.styleFrom(
-                      primary: color1,
-                      padding:  EdgeInsets.symmetric(horizontal: 6.w),
-                      shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(25), // <-- Radius
-    ),
-                      textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
-                  onPressed: () {},
-
-                ),
+                child: const Text('Update influencer'),
+                style: ElevatedButton.styleFrom(
+                    primary: color1,
+                    padding: EdgeInsets.symmetric(horizontal: 6.w),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25), // <-- Radius
+                    ),
+                    textStyle: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold)),
+                onPressed: () {
+                  _saveInfluencer();
+                },
+              ),
             ),
           ]),
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
         ]));
   }
 
+  void _saveInfluencer() {
+    influencer!.adres = adressController
+        .text; // show the user info using the TextEditingController's
+    influencer!.postcode = postcodeController.text;
+    influencer!.stad = stadController.text;
+    influencer!.telefoonnummer = nummerController.text;
+    influencer!.emailadres = emailController.text;
+    
+    if (influencer!.adres != null) {
+      print("hey");
+      InfluencerApi().updateInfluencer(influencer!);
+    } else {
+      print("fail");
+    }
+  }
+
   _userDetails() {
     TextStyle? textStyle = Theme.of(context).textTheme.bodyText1;
 
-    
-    /* adressController.text = influencer!.adres; // show the user info using the TextEditingController's
-    postcodeController.text = influencer!.postcode;
-    stadController.text = influencer!.stad;
-    nummerController.text = influencer!.telefoonnummer;
-    emailController.text = influencer!.emailadres; */
-
+    adressController.text = influencer!.adres!;
+    postcodeController.text = influencer!.postcode!;
+    stadController.text = influencer!.stad!;
+    nummerController.text = influencer!.telefoonnummer!;
+    emailController.text = influencer!.emailadres!;
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
           Padding(
-            padding:  EdgeInsets.only(bottom: 3.h),
+            padding: EdgeInsets.only(bottom: 3.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                 Text("Stef Scharre",
+                Text("Stef Scharre",
                     style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -268,8 +283,6 @@ class _ProfilePage extends State<Profile> {
               ),
             ),
           ),
-
-        
         ],
       ),
     );
