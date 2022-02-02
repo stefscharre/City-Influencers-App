@@ -1,18 +1,20 @@
 import 'package:flutter/foundation.dart';
 
 class Influencer {
-  final String id;
+  final String? id;
+    String? wachtwoord;
   final String? voornaam;
+  
   final String? familienaam;
   final String? geslacht;
-  final String gebruikersnaam;
+  final String? gebruikersnaam;
   final String? profielfoto;
-  final String? adres;
-  final String? postcode;
-  final String? stad;
+  String? adres;
+   String? postcode;
+   String? stad;
   final String? geboortedatum;
-  final String? telefoonnummer;
-  final String emailadres;
+   String? telefoonnummer;
+  String? emailadres;
   final String? gebruikersnaaminstagram;
     final String? gebruikersnaamfacebook;
       final String? gebruikersnaamtiktok;
@@ -26,17 +28,17 @@ class Influencer {
   final List<String>? categories;
 
 
-  Influencer({required this.id, required this.voornaam,
+  Influencer({ this.id,  this.wachtwoord, this.voornaam,
   this.familienaam, 
   this.geslacht, 
-  required this.gebruikersnaam, 
+   this.gebruikersnaam, 
   this.profielfoto, 
   this.adres, 
   this.postcode, 
   this.stad, 
   this.geboortedatum, 
   this.telefoonnummer, 
-  required this.emailadres, 
+   this.emailadres, 
   this.gebruikersnaaminstagram, 
   this.gebruikersnaamfacebook, 
   this.gebruikersnaamtiktok, 
@@ -52,7 +54,8 @@ class Influencer {
   factory Influencer.fromJson(Map<String, dynamic> json) {
     return Influencer(
       id: json['id'],
-      voornaam: json['voornaam'],
+      wachtwoord: json['wachtwoord'],
+      voornaam: json['voornaam'],    
       familienaam: json['familienaam'],
       geslacht: json['geslacht'],
       gebruikersnaam: json['gebruikersnaam'],
@@ -79,7 +82,8 @@ class Influencer {
   Map<String, dynamic> toJson() =>
     {
       'id': id,
-      'voornaam': voornaam,
+       'wachtwoord': wachtwoord,
+      'voornaam': voornaam,   
       'familienaam': familienaam,
       'geslacht': geslacht,
       'gebruikersnaam': gebruikersnaam,

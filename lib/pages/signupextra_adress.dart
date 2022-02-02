@@ -1,36 +1,23 @@
 import 'package:city_influencers_app/apis/influencer_api.dart';
+import 'package:city_influencers_app/models/influencer.dart';
 import 'package:city_influencers_app/pages/home.dart';
-import 'package:city_influencers_app/pages/signup.dart';
+import 'package:city_influencers_app/pages/login.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class SignUpExtraAdress extends StatefulWidget {
+  const SignUpExtraAdress({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LoginPage();
+  State<StatefulWidget> createState() => _SignUpExtraAdress();
 }
 
-class _LoginPage extends State<Login> {
-  Color color1 = HexColor("#E4E4E4");
-  Color color2 = HexColor("#34B6C6");
-  final nameController = TextEditingController();
-  final passwordController = TextEditingController();
-  late var errorMessage = "";
- 
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    nameController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
- void _navigateToSignUp() async {
+class _SignUpExtraAdress extends State<SignUpExtraAdress> {
+  void _navigateToLogIn() async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const SignUp()),
+      MaterialPageRoute(builder: (context) => const Login()),
     );
   }
   void _navigateToHome() async {
@@ -39,17 +26,61 @@ class _LoginPage extends State<Login> {
       MaterialPageRoute(builder: (context) => const Home()),
     );
   }
-
+final adressController = TextEditingController();
+ final postcodeController = TextEditingController();
+ final cityController = TextEditingController();
+   Influencer? influencer;
+ void initState() {
+    super.initState();
+    setState(() {
+      influencer = Influencer(
+          id: "",
+          wachtwoord: "",
+          voornaam: "",
+          familienaam: "",
+          geslacht: "",
+          gebruikersnaam: "",
+          profielfoto: "",
+          adres: "",
+          postcode: "",
+          stad: "",
+          geboortedatum: "",
+          telefoonnummer: "",
+          emailadres: "",
+          gebruikersnaaminstagram: "",
+          gebruikersnaamfacebook: "",
+          gebruikersnaamtiktok: "",
+          aantalvolgersinstagram: "",
+          aantalvolgersfacebook: "",
+          aantalvolgerstiktok: "",
+          infoovervolgers: "",
+          badge: "",
+          aantalpunten: "",
+          categories: []);
+    });
+    _getinfluencer();
+  }
+  void _getinfluencer() {
+    print("doet het");
+    InfluencerApi().getInfluencer().then((result) {
+      setState(() {
+        influencer = result;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    Color color1 = HexColor("#2A929E");
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
+
         body: Container(
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/BackgroundLogin.png"),
+                    image: AssetImage("assets/BackgroundSignup.png"),
                     fit: BoxFit.fill)),
+
             child: Column(
               children: <Widget>[
                 Row(
@@ -74,36 +105,54 @@ class _LoginPage extends State<Login> {
                           child: SizedBox(
                             width: 50.w,
                             child: const Text(
-                              "Welcome back",
+                              "Where do you live?",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   fontSize: 46.0,
                                   decoration: TextDecoration.none,
                                   fontFamily: 'SansitaSwashed',
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  color: Colors.black),
                             ),
                           ),
                         ),
-                        SizedBox(height: 15.h),
-                        SizedBox(
-                          height: 5.h,
-                          child: Text(
-                            errorMessage,
-                            style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red),
-                          ),
-                        ),
+
+                        SizedBox(height: 9.h),
                         Padding(
                           padding: EdgeInsets.only(bottom: 2.h),
                           child: SizedBox(
                             width: 85.w,
                             child: TextField(
-                              controller: nameController,
+                              controller: adressController,
+                              style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                hintText: "Username",
+                                hintText: "Address",
+                                hintStyle: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                filled: true,
+                                fillColor: color1,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 3.5.h, vertical: 3.h),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(20)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: SizedBox(
+                            width: 85.w,
+                            child: TextField(
+                              controller: postcodeController,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                hintText: "Postcode",
+                                hintStyle: const TextStyle(
+                                  color: Colors.white,
+                                ),
                                 filled: true,
                                 fillColor: color1,
                                 contentPadding: EdgeInsets.symmetric(
@@ -118,10 +167,14 @@ class _LoginPage extends State<Login> {
                         SizedBox(
                             width: 85.w,
                             child: TextField(
-                              obscureText: true,
-                              controller: passwordController,
+                               obscureText: true,
+                              controller: cityController,
+                              style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                hintText: "Password",
+                                hintText: "City",
+                                hintStyle: const TextStyle(
+                                  color: Colors.white,
+                                ),
                                 filled: true,
                                 fillColor: color1,
                                 contentPadding: EdgeInsets.symmetric(
@@ -131,14 +184,15 @@ class _LoginPage extends State<Login> {
                                     borderRadius: BorderRadius.circular(20)),
                               ),
                             )),
+                            
                         SizedBox(height: 4.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(right: 21.w),
+                              padding: EdgeInsets.only(right: 18.w),
                               child: const Text(
-                                "Sign In",
+                                "Sign Up",
                                 style: TextStyle(
                                     fontSize: 32.0,
                                     decoration: TextDecoration.none,
@@ -155,22 +209,7 @@ class _LoginPage extends State<Login> {
                                 child: IconButton(
                                   icon: const Icon(Icons.arrow_forward_sharp),
                                   color: Colors.black,
-                                  onPressed: () {
-                                    InfluencerApi()
-                                        .postLogin(
-                                            "stef_scharre", "testWachtwoord3")
-                                        .then((value) => {
-                                              if (value.token == "")
-                                                {
-                                                  setState(() {
-                                                    errorMessage =
-                                                        "Wrong username or password";
-                                                  })
-                                                }
-                                              else
-                                                {_navigateToHome()}
-                                            });
-                                  },
+                                  onPressed: () {_updateInfluencer();_navigateToHome();}
                                 ),
                               ),
                             ),
@@ -178,7 +217,7 @@ class _LoginPage extends State<Login> {
                         ),
                         SizedBox(height: 12.h),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(right: 10.w),
@@ -192,24 +231,9 @@ class _LoginPage extends State<Login> {
                                       color: Colors.black),
                                 ),
                                 onPressed: () {
-                                  _navigateToSignUp();
+                                  _updateInfluencer();
                                 },
-                                child: const Text('Sign up'),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.w),
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                      fontSize: 18.0,
-                                      decoration: TextDecoration.none,
-                                      fontFamily: 'SansitaSwashed',
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.black),
-                                ),
-                                onPressed: () {},
-                                child: const Text('Forgot Password'),
+                                child: const Text('Sign in'),
                               ),
                             ),
                           ],
@@ -220,5 +244,17 @@ class _LoginPage extends State<Login> {
                 ),
               ],
             )));
+            
+  }
+   void _updateInfluencer() {
+    influencer!.adres = adressController.text; // show the user info using the TextEditingController's
+    influencer!.postcode = postcodeController.text;
+    influencer!.stad = cityController.text;
+    
+    if (influencer!.adres != null) {
+      InfluencerApi().updateInfluencer(influencer!);
+    } else {
+      print("fail");
+    }
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/models/city.dart';
@@ -12,6 +11,7 @@ import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:image_picker/image_picker.dart';
+
 class Post extends StatefulWidget {
   const Post({Key? key}) : super(key: key);
 
@@ -30,62 +30,68 @@ class _PostPage extends State<Post> {
   void initState() {
     super.initState();
     setState(() {
-          influencer= Influencer(id: "", voornaam: "", familienaam: "", geslacht: "", gebruikersnaam: "Stef", profielfoto: "", adres: "", postcode: "", stad: "", geboortedatum: "", telefoonnummer: "", emailadres: "", gebruikersnaaminstagram: "", gebruikersnaamfacebook: "", gebruikersnaamtiktok: "", aantalvolgersinstagram: "", aantalvolgersfacebook: "", aantalvolgerstiktok: "", infoovervolgers: "", badge: "", aantalpunten: "", categories: []);
-
+      influencer = Influencer(
+          id: "",
+          voornaam: "",
+          familienaam: "",
+          geslacht: "",
+          gebruikersnaam: "Stef",
+          profielfoto: "",
+          adres: "",
+          postcode: "",
+          stad: "",
+          geboortedatum: "",
+          telefoonnummer: "",
+          emailadres: "",
+          gebruikersnaaminstagram: "",
+          gebruikersnaamfacebook: "",
+          gebruikersnaamtiktok: "",
+          aantalvolgersinstagram: "",
+          aantalvolgersfacebook: "",
+          aantalvolgerstiktok: "",
+          infoovervolgers: "",
+          badge: "",
+          aantalpunten: "",
+          categories: []);
     });
-   _getinfluencer();
+    _getinfluencer();
   }
-  void _getinfluencer(){
-      InfluencerApi().getInfluencer().then((result){
 
-          setState(() {
-      influencer = result;
+  void _getinfluencer() {
+    InfluencerApi().getInfluencer().then((result) {
+      setState(() {
+        influencer = result;
       });
-      });
+    });
   }
- 
 
   @override
   Widget build(BuildContext context) {
-
-    
     return Scaffold(
-      
-      drawer: const NavDrawer(),
-        body: Stack(
-          children: [
-          Column(
-              children: <Widget>[
+        drawer: const NavDrawer(),
+        body: Stack(children: [
+          Column(children: <Widget>[
             Row(children: <Widget>[
               HomeBackgroundWidget(),
             ]),
             Padding(
-              padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
-               child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "New post" ,
-                style: TextStyle(
-                    fontSize: 36, fontWeight: FontWeight.bold, color: color1),
-              ),
-              
-            )),
+                padding: EdgeInsets.fromLTRB(3.5.w, 3.w, 0, 3.w),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "New post",
+                    style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: color1),
+                  ),
+                )),
             _post()
-          ]
-          
-          ),
-
-          const Align(
-            
-            alignment: Alignment.bottomCenter,
-            
-            child: MenuWidget()
-          )]
-        )
-        
-        
-        );
+          ]),
+          const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
+        ]));
   }
+
   _post() {
     TextStyle? textStyle = Theme.of(context).textTheme.bodyText1;
 
@@ -97,33 +103,27 @@ class _PostPage extends State<Post> {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
-
-            
-                  Padding(
-              padding:  EdgeInsets.fromLTRB(0,3.h,0,3.h),
-              child: ElevatedButton(
-              
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 3.h, 0, 3.h),
+            child: ElevatedButton(
               child: const Text('Upload image'),
-                   style: ElevatedButton.styleFrom(
-                      primary: color1,
-                      padding:  EdgeInsets.symmetric(horizontal: 6.w),
-                      shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(25), // <-- Radius
-    ),
-                      textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
-                  onPressed: () {},
-
-                ),
+              style: ElevatedButton.styleFrom(
+                  primary: color1,
+                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25), // <-- Radius
+                  ),
+                  textStyle: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.bold)),
+              onPressed: () {},
             ),
-              
+          ),
           SizedBox(
             height: 15.h,
             child: TextField(
               controller: adressController,
-               keyboardType: TextInputType.multiline,
-                maxLines: 5,
+              keyboardType: TextInputType.multiline,
+              maxLines: 5,
               style: textStyle,
               decoration: InputDecoration(
                 labelText: "Description",
@@ -155,40 +155,34 @@ class _PostPage extends State<Post> {
           Container(
             height: 10,
           ),
-         Row(
-           mainAxisAlignment:  MainAxisAlignment.center,
-           children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(2.w),
-                    child: Image.asset(
-                      'assets/facebook.png',
-                      height: 5.h,
-                    ),
-                  ),
-
-                  Padding(
-                    padding:  EdgeInsets.all(2.w),
-                    child: Image.asset(
-                      'assets/instagram.png',
-                      height: 5.h,
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.all(2.w),
-                    child: Image.asset(
-                      'assets/tiktok.png',
-                      height: 5.h,
-                    ),
-                  ),
-         ],),
-          
-
-        
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(2.w),
+                child: Image.asset(
+                  'assets/facebook.png',
+                  height: 5.h,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(2.w),
+                child: Image.asset(
+                  'assets/instagram.png',
+                  height: 5.h,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(2.w),
+                child: Image.asset(
+                  'assets/tiktok.png',
+                  height: 5.h,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
-
-
 }

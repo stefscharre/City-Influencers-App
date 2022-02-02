@@ -1,5 +1,6 @@
 import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/pages/login.dart';
+import 'package:city_influencers_app/pages/signupextra_adress.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -12,23 +13,35 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpPage extends State<SignUp> {
-  void _navigateToLogIn() async {
+  void _navigateToExtra() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SignUpExtraAdress()),
+    );
+  }
+  void _navigateToLogin() async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const Login()),
     );
   }
+final nameController = TextEditingController();
+ final emailController = TextEditingController();
+ final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     Color color1 = HexColor("#2A929E");
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
         body: Container(
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/BackgroundSignup.png"),
                     fit: BoxFit.fill)),
+
             child: Column(
               children: <Widget>[
                 Row(
@@ -64,12 +77,15 @@ class _SignUpPage extends State<SignUp> {
                             ),
                           ),
                         ),
+
+
                         SizedBox(height: 9.h),
                         Padding(
                           padding: EdgeInsets.only(bottom: 2.h),
                           child: SizedBox(
                             width: 85.w,
                             child: TextField(
+                              controller: nameController,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 hintText: "Your Name",
@@ -92,6 +108,7 @@ class _SignUpPage extends State<SignUp> {
                           child: SizedBox(
                             width: 85.w,
                             child: TextField(
+                              controller: emailController,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 hintText: "Your Email",
@@ -112,6 +129,8 @@ class _SignUpPage extends State<SignUp> {
                         SizedBox(
                             width: 85.w,
                             child: TextField(
+                               obscureText: true,
+                              controller: passwordController,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 hintText: "Password",
@@ -127,6 +146,7 @@ class _SignUpPage extends State<SignUp> {
                                     borderRadius: BorderRadius.circular(20)),
                               ),
                             )),
+                            
                         SizedBox(height: 4.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -150,8 +170,8 @@ class _SignUpPage extends State<SignUp> {
                                 padding: EdgeInsets.all(2.w),
                                 child: IconButton(
                                   icon: const Icon(Icons.arrow_forward_sharp),
-                                  color: Colors.white,
-                                  onPressed: () {InfluencerApi().postInfluencer("stefscharre@hotmail.com", "scharre", "scharre123");_navigateToLogIn();}
+                                  color: Colors.black,
+                                  onPressed: () {InfluencerApi().postInfluencer(emailController.text, nameController.text, passwordController.text);_navigateToExtra(); }
                                 ),
                               ),
                             ),
@@ -173,7 +193,7 @@ class _SignUpPage extends State<SignUp> {
                                       color: Colors.black),
                                 ),
                                 onPressed: () {
-                                  _navigateToLogIn();
+                                  _navigateToLogin();
                                 },
                                 child: const Text('Sign in'),
                               ),

@@ -61,7 +61,7 @@ class _DetailPage extends State<DetailPage> {
                   children: <Widget> [
                     Padding(
                       padding: EdgeInsets.fromLTRB(7.w,0,0,1.h),
-                      child:  Text("Informatie", style: TextStyle(fontSize: 18,
+                      child:  const Text("Informatie", style: TextStyle(fontSize: 18,
                       fontWeight: FontWeight.bold),),
                     ),
                   ],
