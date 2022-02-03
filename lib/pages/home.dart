@@ -69,8 +69,7 @@ class _HomePage extends State<Home> {
                 future: influencerData,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Text(
-                      snapshot.data!.gebruikersnaam.toString(),
+                    return Text('Campaigns',
                       style: TextStyle(
                           fontSize: 36, fontWeight: FontWeight.bold, color: color1),
                       );

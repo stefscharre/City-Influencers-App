@@ -2,6 +2,8 @@ import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/models/influencer.dart';
 import 'package:city_influencers_app/pages/home.dart';
 import 'package:city_influencers_app/pages/login.dart';
+import 'package:city_influencers_app/pages/signupextra.dart';
+import 'package:city_influencers_app/pages/signupusernames.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -20,17 +22,20 @@ class _SignUpExtraAdress extends State<SignUpExtraAdress> {
       MaterialPageRoute(builder: (context) => const Login()),
     );
   }
-  void _navigateToHome() async {
+
+  void _navigateToExtra() async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Home()),
+      MaterialPageRoute(builder: (context) => const SignUpExtraUsernames()),
     );
   }
-final adressController = TextEditingController();
- final postcodeController = TextEditingController();
- final cityController = TextEditingController();
-   Influencer? influencer;
- void initState() {
+
+  final adressController = TextEditingController();
+  final postcodeController = TextEditingController();
+  final cityController = TextEditingController();
+  final nummerController = TextEditingController();
+  Influencer? influencer;
+  void initState() {
     super.initState();
     setState(() {
       influencer = Influencer(
@@ -60,6 +65,7 @@ final adressController = TextEditingController();
     });
     _getinfluencer();
   }
+
   void _getinfluencer() {
     print("doet het");
     InfluencerApi().getInfluencer().then((result) {
@@ -68,20 +74,21 @@ final adressController = TextEditingController();
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     Color color1 = HexColor("#2A929E");
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-
+        resizeToAvoidBottomInset: true,
         body: Container(
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
+                    alignment: Alignment.topCenter,
                     image: AssetImage("assets/BackgroundSignup.png"),
-                    fit: BoxFit.fill)),
-
-            child: Column(
+                    fit: BoxFit.fitWidth)),
+            child: SingleChildScrollView(
+                child: Column(
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -101,9 +108,9 @@ final adressController = TextEditingController();
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(right: 16.h),
+                          padding: EdgeInsets.only(right: 9.h),
                           child: SizedBox(
-                            width: 50.w,
+                            width: 65.w,
                             child: const Text(
                               "Where do you live?",
                               textAlign: TextAlign.left,
@@ -116,7 +123,6 @@ final adressController = TextEditingController();
                             ),
                           ),
                         ),
-
                         SizedBox(height: 9.h),
                         Padding(
                           padding: EdgeInsets.only(bottom: 2.h),
@@ -164,10 +170,11 @@ final adressController = TextEditingController();
                             ),
                           ),
                         ),
-                        SizedBox(
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                       child: SizedBox(
                             width: 85.w,
                             child: TextField(
-                               obscureText: true,
                               controller: cityController,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
@@ -183,8 +190,26 @@ final adressController = TextEditingController();
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(20)),
                               ),
+                            ))),
+                        SizedBox(
+                            width: 85.w,
+                            child: TextField(
+                              controller: nummerController,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                hintText: "Telefoonnummer",
+                                hintStyle: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                filled: true,
+                                fillColor: color1,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 3.5.h, vertical: 3.h),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(20)),
+                              ),
                             )),
-                            
                         SizedBox(height: 4.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -207,50 +232,31 @@ final adressController = TextEditingController();
                               child: Padding(
                                 padding: EdgeInsets.all(2.w),
                                 child: IconButton(
-                                  icon: const Icon(Icons.arrow_forward_sharp),
-                                  color: Colors.black,
-                                  onPressed: () {_updateInfluencer();_navigateToHome();}
-                                ),
+                                    icon: const Icon(Icons.arrow_forward_sharp),
+                                    color: Colors.black,
+                                    onPressed: () {
+                                      _updateInfluencer();
+                                      _navigateToExtra();
+                                    }),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 12.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(right: 10.w),
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                      fontSize: 18.0,
-                                      decoration: TextDecoration.none,
-                                      fontFamily: 'SansitaSwashed',
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.black),
-                                ),
-                                onPressed: () {
-                                  _updateInfluencer();
-                                },
-                                child: const Text('Sign in'),
-                              ),
-                            ),
-                          ],
-                        )
                       ],
                     ),
                   ),
                 ),
               ],
-            )));
-            
+            ))));
   }
-   void _updateInfluencer() {
-    influencer!.adres = adressController.text; // show the user info using the TextEditingController's
+
+  void _updateInfluencer() {
+    influencer!.adres = adressController
+        .text; // show the user info using the TextEditingController's
     influencer!.postcode = postcodeController.text;
     influencer!.stad = cityController.text;
-    
+    influencer!.telefoonnummer = nummerController.text;
+
     if (influencer!.adres != null) {
       InfluencerApi().updateInfluencer(influencer!);
     } else {
