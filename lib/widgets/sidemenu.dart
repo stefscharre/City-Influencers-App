@@ -1,3 +1,5 @@
+import 'package:city_influencers_app/pages/mycampaigns.dart';
+import 'package:city_influencers_app/pages/myposts.dart';
 import 'package:city_influencers_app/pages/profile.dart';
 import 'package:city_influencers_app/pages/rewards.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,24 @@ class NavDrawer extends StatelessWidget {
     
     
   }
+   void _navigateToMyCampaigns() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MyCampaigns()),
+    );
+    
+    
+  }
+  void _navigateToMyPosts() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MyPosts()),
+    );
+    
+    
+  }
+  
+  
   
     return Theme(
            data: Theme.of(context).copyWith(
@@ -71,7 +91,7 @@ class NavDrawer extends StatelessWidget {
               leading:  Icon(Icons.shopping_bag_outlined,color: Colors.white,size: 3.h,),
              title: const Text("My campaigns",style: TextStyle(fontSize: 24,
                           fontWeight: FontWeight.bold, color: Colors.white)),
-              onTap: () {
+              onTap: () {_navigateToMyCampaigns();
                 // Update the state of the app
                 // ...
                 // Then close the drawer
@@ -88,6 +108,7 @@ class NavDrawer extends StatelessWidget {
              title: const Text("My posts",style: TextStyle(fontSize: 24,
                           fontWeight: FontWeight.bold, color: Colors.white)),
               onTap: () {
+                _navigateToMyPosts();
                 // Update the state of the app
                 // ...
                 // Then close the drawer

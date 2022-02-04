@@ -14,14 +14,14 @@ import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Messages extends StatefulWidget {
+  const Messages({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HomePage();
+  State<StatefulWidget> createState() => _MessagePage();
 }
 
-class _HomePage extends State<Home> {
+class _MessagePage extends State<Messages> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
   List<City> cityList = [];
@@ -65,35 +65,14 @@ class _HomePage extends State<Home> {
               padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
                child: Align(
               alignment: Alignment.centerLeft,
-              child: Text('Campaigns',
+              child:Text('Messages',
                       style: TextStyle(
                           fontSize: 36, fontWeight: FontWeight.bold, color: color1),
                       )
               
             )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-            SizedBox(
-                      width: 60.w,
-            child: Padding(
-              padding:  EdgeInsets.only(left:3.5.w),
-              
-              child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Search",
-                          prefixIcon: const Icon(Icons.search),
-                          filled: true,
-                          fillColor: color2,
-                          contentPadding: const EdgeInsets.all(0),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                      ),
-            ),),]),
           
-          _userListItems()
+          _messages()
           ]
           ),
 
@@ -109,11 +88,12 @@ class _HomePage extends State<Home> {
         );
          
   }
-  ListView _userListItems() {
+  ListView _messages() {
     return ListView.builder(
       itemCount: count,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
+      
       itemBuilder: (BuildContext context, int position) {
         return  Align(
           alignment:position.isEven ? Alignment.center:Alignment.center,

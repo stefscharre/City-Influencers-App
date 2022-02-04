@@ -77,10 +77,11 @@ class _ProfilePage extends State<Profile> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
         drawer: const NavDrawer(),
-        body: SingleChildScrollView( 
-          child: Stack(children: [
-          
-          Column(children: <Widget>[
+        body: Stack(children: [
+          SingleChildScrollView( 
+            
+          child: Column(children: <Widget>[
+            
             Row(children: <Widget>[
               HomeBackgroundWidget(),
             ]),
@@ -103,14 +104,13 @@ class _ProfilePage extends State<Profile> {
                 },
               ),
             ),
-          ]),
+          ])),
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
-        ])));
+        ]));
   }
 
   void _saveInfluencer() {
-    influencer!.adres = adressController
-        .text; // show the user info using the TextEditingController's
+    influencer!.adres = adressController.text; // show the user info using the TextEditingController's
     influencer!.postcode = postcodeController.text;
     influencer!.stad = stadController.text;
     influencer!.telefoonnummer = nummerController.text;

@@ -2,12 +2,12 @@ import 'package:city_influencers_app/pages/detailpage.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
-class CampaignWidget extends StatelessWidget {
+class MessageWidget extends StatelessWidget {
   final String imageurl;
   final String text;
   final int price;
 
-  const CampaignWidget(
+  const MessageWidget(
       {Key? key, required this.imageurl, required this.text, required this.price}) 
       : super(key: key);
 
@@ -26,7 +26,7 @@ class CampaignWidget extends StatelessWidget {
       
       padding: const EdgeInsets.fromLTRB(0,10,0,0),
       child: SizedBox(
-          height: 18.h,      
+          height: 10.h,      
           width: 95.w,
         child: Card(
       shape: RoundedRectangleBorder(
@@ -36,15 +36,8 @@ class CampaignWidget extends StatelessWidget {
         child: Row(
           
           children: <Widget>[
-            
-            SizedBox(width: 45.w,
-            child: Column(
 
-              
-        children: <Widget>[
-          Row(
-          
-          children: <Widget>[
+
              Padding(
                padding:  EdgeInsets.fromLTRB(2.w,1.5.w,1.w,0),
                child: Icon(
@@ -62,7 +55,7 @@ class CampaignWidget extends StatelessWidget {
             style: TextStyle(fontSize: 24,
                     fontWeight: FontWeight.bold, color: color1),
           ),
-        ),]),
+        ),
         Padding(
           padding:  EdgeInsets.only(left:4.5.w),
           child: SizedBox(
@@ -92,22 +85,9 @@ class CampaignWidget extends StatelessWidget {
                 onPressed: () {_navigateToDetail(1);},
 
               ),
-        ),]
-      )),
-      SizedBox(width: 45.w,
-            child: Column(
-              
-              children: <Widget> [
-
-Image.asset(imageurl,fit:BoxFit.cover)
-
-                
-              ],
-            ),
-      )],
-        ),
         
-      )),
-    );
+        
+        )]),
+      )));
   }
 }

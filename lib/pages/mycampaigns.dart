@@ -14,14 +14,14 @@ import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class MyCampaigns extends StatefulWidget {
+  const MyCampaigns({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HomePage();
+  State<StatefulWidget> createState() => _MyCampaigns();
 }
 
-class _HomePage extends State<Home> {
+class _MyCampaigns extends State<MyCampaigns> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
   List<City> cityList = [];
@@ -65,7 +65,7 @@ class _HomePage extends State<Home> {
               padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
                child: Align(
               alignment: Alignment.centerLeft,
-              child: Text('Campaigns',
+              child: Text('My Campaigns',
                       style: TextStyle(
                           fontSize: 36, fontWeight: FontWeight.bold, color: color1),
                       )
@@ -114,6 +114,7 @@ class _HomePage extends State<Home> {
       itemCount: count,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
+      
       itemBuilder: (BuildContext context, int position) {
         return  Align(
           alignment:position.isEven ? Alignment.center:Alignment.center,

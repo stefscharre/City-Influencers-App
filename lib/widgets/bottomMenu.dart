@@ -33,16 +33,26 @@ class MenuWidget extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const Post()),
       );
     }
-
+void _navigateToMessage() async {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Post()),
+      );
+    }
 
     Color color1 = HexColor("#4C525C");
     return Stack(children: [
+      
       Divider(
         thickness: 1,
         color: color1,
       ),
-      Padding(
+      Container(
+        color: Colors.white,
+      child: Padding(
+        
         padding: EdgeInsets.fromLTRB(0, 1.5.h, 0, 1.5.h),
+
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -70,7 +80,7 @@ class MenuWidget extends StatelessWidget {
                   color: color1,
                   size: 40,
                 ),
-                onPressed: () {},
+                onPressed: () {_navigateToMessage();},
               ),
               IconButton(
                 icon: Icon(
@@ -84,6 +94,6 @@ class MenuWidget extends StatelessWidget {
               ),
             ]),
       ),
-    ]);
+    )]);
   }
 }
