@@ -3,29 +3,29 @@ import 'package:flutter/foundation.dart';
 class Influencer {
   final String? id;
     String? wachtwoord;
-  final String? voornaam;
+   String? voornaam;
   
-  final String? familienaam;
-  final String? geslacht;
-  final String? gebruikersnaam;
-  final String? profielfoto;
+   String? familienaam;
+   String? geslacht;
+   String? gebruikersnaam;
+   String? profielfoto;
   String? adres;
    String? postcode;
    String? stad;
-  final String? geboortedatum;
+   String? geboortedatum;
    String? telefoonnummer;
   String? emailadres;
-  final String? gebruikersnaaminstagram;
-    final String? gebruikersnaamfacebook;
-      final String? gebruikersnaamtiktok;
-  final String? aantalvolgersinstagram;
-  final String? aantalvolgersfacebook;
-  final String? aantalvolgerstiktok;
+   String? gebruikersnaaminstagram;
+     String? gebruikersnaamfacebook;
+       String? gebruikersnaamtiktok;
+   String? aantalvolgersinstagram;
+   String? aantalvolgersfacebook;
+   String? aantalvolgerstiktok;
 
-  final String? infoovervolgers;
-  final String? badge;
-  final String? aantalpunten;
-  final List<String>? categories;
+   String? infoovervolgers;
+   String? badge;
+   String? aantalpunten;
+   List<String>? categories;
 
 
   Influencer({ this.id,  this.wachtwoord, this.voornaam,

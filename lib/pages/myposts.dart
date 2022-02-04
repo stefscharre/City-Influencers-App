@@ -8,44 +8,27 @@ import 'package:city_influencers_app/pages/signup.dart';
 
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
 import 'package:city_influencers_app/widgets/campaign.dart';
+import 'package:city_influencers_app/widgets/postWidget.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:city_influencers_app/widgets/homeBackground.dart';
 import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class MyPosts extends StatefulWidget {
+  const MyPosts({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HomePage();
+  State<StatefulWidget> createState() => _MyPostsPage();
 }
 
-class _HomePage extends State<Home> {
+class _MyPostsPage extends State<MyPosts> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
   List<City> cityList = [];
   int count = 0;
   late Future<Influencer?> influencerData;
-  @override
-  void initState() {
-    super.initState();
-   // _getinfluencer();
-    _getcities();
 
-    influencerData = InfluencerApi().getInfluencer();
-
-
-  }
- 
-  void _getcities() {
-    CityApi.fetchCities().then((result) {
-      setState(() {
-        cityList = result;
-        count = result.length;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +48,11 @@ class _HomePage extends State<Home> {
               padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
                child: Align(
               alignment: Alignment.centerLeft,
-              child: Text('Campaigns',
+              child:Text('Campaigns',
                       style: TextStyle(
                           fontSize: 36, fontWeight: FontWeight.bold, color: color1),
                       )
-              
+     
             )),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -93,7 +76,7 @@ class _HomePage extends State<Home> {
                       ),
             ),),]),
           
-          _userListItems()
+          _myPosts()
           ]
           ),
 
@@ -109,21 +92,21 @@ class _HomePage extends State<Home> {
         );
          
   }
-  ListView _userListItems() {
-    return ListView.builder(
-      itemCount: count,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int position) {
-        return  Align(
-          alignment:position.isEven ? Alignment.center:Alignment.center,
-           child: CampaignWidget(
-                  imageurl: 'assets/biefstukFriet.jpg',
-                  text: cityList[position].naam,
-                  price: 250)
-        );
-      },
+
+   GridView _myPosts() {
+    return GridView.count(
+  // Create a grid with 2 columns. If you change the scrollDirection to
+  // horizontal, this produces 2 rows.
+  crossAxisCount: 2,
+  shrinkWrap: true,
+  // Generate 100 widgets that display their index in the List.
+  children: List.generate(100, (index) {
+    return const Center(
+      child: PostWidget(),
     );
+  }),
+);
+  
   }
   
 

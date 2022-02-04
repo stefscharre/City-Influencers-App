@@ -1,35 +1,76 @@
 import 'package:city_influencers_app/apis/influencer_api.dart';
+import 'package:city_influencers_app/models/influencer.dart';
+import 'package:city_influencers_app/pages/home.dart';
 import 'package:city_influencers_app/pages/login.dart';
-import 'package:city_influencers_app/pages/signupextra.dart';
 import 'package:city_influencers_app/pages/signupextra_adress.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+import 'package:intl/intl.dart';
+class SignUpExtraUsernames extends StatefulWidget {
+  const SignUpExtraUsernames({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _SignUpPage();
+  State<StatefulWidget> createState() => _SignUpExtraUsernames();
 }
-
-class _SignUpPage extends State<SignUp> {
-  void _navigateToExtra() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const SignUpExtra()),
-    );
-  }
-  void _navigateToLogin() async {
+var items = ['Man', 'Vrouw', 'Andere'];
+class _SignUpExtraUsernames extends State<SignUpExtraUsernames> {
+  void _navigateToLogIn() async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const Login()),
     );
   }
-final nameController = TextEditingController();
- final emailController = TextEditingController();
- final passwordController = TextEditingController();
-
+  void _navigateToHome() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Home()),
+    );
+  }
+  String date = "";
+DateTime selectedDate = DateTime.now();
+final facebookController = TextEditingController();
+ final instagramController = TextEditingController();
+ final tiktokController = TextEditingController();
+   Influencer? influencer;
+ void initState() {
+    super.initState();
+    setState(() {
+      influencer = Influencer(
+          id: "",
+          wachtwoord: "",
+          voornaam: "",
+          familienaam: "",
+          geslacht: "",
+          gebruikersnaam: "",
+          profielfoto: "",
+          adres: "",
+          postcode: "",
+          stad: "",
+          geboortedatum: "",
+          telefoonnummer: "",
+          emailadres: "",
+          gebruikersnaaminstagram: "",
+          gebruikersnaamfacebook: "",
+          gebruikersnaamtiktok: "",
+          aantalvolgersinstagram: "",
+          aantalvolgersfacebook: "",
+          aantalvolgerstiktok: "",
+          infoovervolgers: "",
+          badge: "",
+          aantalpunten: "",
+          categories: []);
+    });
+    _getinfluencer();
+  }
+  void _getinfluencer() {
+    print("doet het");
+    InfluencerApi().getInfluencer().then((result) {
+      setState(() {
+        influencer = result;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     Color color1 = HexColor("#2A929E");
@@ -43,7 +84,7 @@ final nameController = TextEditingController();
                   alignment: Alignment.topCenter,
                     image: AssetImage("assets/BackgroundSignup.png"),
                     fit: BoxFit.fitWidth)),
- child: SingleChildScrollView(
+child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Row(
@@ -68,7 +109,7 @@ final nameController = TextEditingController();
                           child: SizedBox(
                             width: 50.w,
                             child: const Text(
-                              "Create account",
+                              "Social media",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   fontSize: 46.0,
@@ -80,17 +121,16 @@ final nameController = TextEditingController();
                           ),
                         ),
 
-
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 9.h),
                         Padding(
                           padding: EdgeInsets.only(bottom: 2.h),
                           child: SizedBox(
                             width: 85.w,
                             child: TextField(
-                              controller: nameController,
+                              controller: facebookController,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                hintText: "Your Name",
+                                hintText: "Username Facebook",
                                 hintStyle: const TextStyle(
                                   color: Colors.white,
                                 ),
@@ -110,10 +150,10 @@ final nameController = TextEditingController();
                           child: SizedBox(
                             width: 85.w,
                             child: TextField(
-                              controller: emailController,
+                              controller: instagramController,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                hintText: "Your Email",
+                                hintText: "Username Instagram",
                                 hintStyle: const TextStyle(
                                   color: Colors.white,
                                 ),
@@ -128,14 +168,15 @@ final nameController = TextEditingController();
                             ),
                           ),
                         ),
-                        SizedBox(
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: SizedBox(
                             width: 85.w,
                             child: TextField(
-                               obscureText: true,
-                              controller: passwordController,
+                              controller: tiktokController,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                hintText: "Password",
+                                hintText: "Username Tiktok",
                                 hintStyle: const TextStyle(
                                   color: Colors.white,
                                 ),
@@ -147,8 +188,10 @@ final nameController = TextEditingController();
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(20)),
                               ),
-                            )),
-                            
+                            ),
+                          ),
+                        ),
+
                         SizedBox(height: 4.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -173,40 +216,29 @@ final nameController = TextEditingController();
                                 child: IconButton(
                                   icon: const Icon(Icons.arrow_forward_sharp),
                                   color: Colors.black,
-                                  onPressed: () {InfluencerApi().postInfluencer(emailController.text, nameController.text, passwordController.text); _navigateToExtra(); }
+                                  onPressed: () {_updateInfluencer();_navigateToHome();}
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 12.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(right: 10.w),
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                      fontSize: 18.0,
-                                      decoration: TextDecoration.none,
-                                      fontFamily: 'SansitaSwashed',
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.black),
-                                ),
-                                onPressed: () {
-                                  _navigateToLogin();
-                                },
-                                child: const Text('Sign in'),
-                              ),
-                            ),
-                          ],
-                        )
+                      
                       ],
                     ),
                   ),
                 ),
               ],
             ))));
+            
   }
+   void _updateInfluencer() {
+    influencer!.gebruikersnaamfacebook = facebookController.text; // show the user info using the TextEditingController's
+    influencer!.gebruikersnaaminstagram = instagramController.text;
+    influencer!.gebruikersnaamtiktok = tiktokController.text;
+ InfluencerApi().updateInfluencer(influencer!);
+
+    
+  }
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+
 }

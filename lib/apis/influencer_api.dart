@@ -7,6 +7,7 @@ import 'package:city_influencers_app/models/login/tokenvalidation.dart';
 import 'package:city_influencers_app/pages/login.dart';
 import 'package:city_influencers_app/pages/signup.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class InfluencerApi {
   final secureStorage = const FlutterSecureStorage();
-
   IOSOptions _getIOSOptions() => const IOSOptions(
         accessibility: IOSAccessibility.first_unlock,
       );
@@ -23,6 +23,7 @@ class InfluencerApi {
         encryptedSharedPreferences: true,
       );
   Future<LoginData> postLogin(String username, String password) async {
+    
     final login = {
       'username': username,
       'password': password,
@@ -58,7 +59,7 @@ class InfluencerApi {
 
   Future<Influencer> postInfluencer(
       String email, String username, String password) async {
-    final singup = {
+    final signup = {
       'type': "influencer",
       'username': username,
       'password': password,
@@ -68,12 +69,12 @@ class InfluencerApi {
     Response res = await post(
       Uri.parse(
           "http://api-ci.westeurope.cloudapp.azure.com:8080/api/register"),
-      body: singup,
+      body: signup,
     );
     print(res.body);
     if (res.statusCode == 200) {
-      postLogin(username, password);
-      return Influencer.fromJson(jsonDecode(res.body));
+     return postLogin(username, password).then((value) =>  Influencer.fromJson(jsonDecode(res.body)));
+      
     } else {
       throw "Unable to make influencer.";
     }

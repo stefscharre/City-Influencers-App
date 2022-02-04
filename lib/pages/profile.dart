@@ -62,7 +62,7 @@ class _ProfilePage extends State<Profile> {
     });
     _getinfluencer();
   }
-
+  
   void _getinfluencer() {
     print("doet het");
     InfluencerApi().getInfluencer().then((result) {
@@ -75,12 +75,17 @@ class _ProfilePage extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
         drawer: const NavDrawer(),
         body: Stack(children: [
-          Column(children: <Widget>[
+          SingleChildScrollView( 
+            
+          child: Column(children: <Widget>[
+            
             Row(children: <Widget>[
               HomeBackgroundWidget(),
             ]),
+            
             _userDetails(),
             Padding(
               padding: EdgeInsets.only(top: 1.h),
@@ -99,14 +104,13 @@ class _ProfilePage extends State<Profile> {
                 },
               ),
             ),
-          ]),
+          ])),
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
         ]));
   }
 
   void _saveInfluencer() {
-    influencer!.adres = adressController
-        .text; // show the user info using the TextEditingController's
+    influencer!.adres = adressController.text; // show the user info using the TextEditingController's
     influencer!.postcode = postcodeController.text;
     influencer!.stad = stadController.text;
     influencer!.telefoonnummer = nummerController.text;
@@ -137,7 +141,7 @@ class _ProfilePage extends State<Profile> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text("Stef Scharre",
+                Text('${influencer?.voornaam} ${influencer?.familienaam}',
                     style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -267,21 +271,6 @@ class _ProfilePage extends State<Profile> {
           ),
           Container(
             height: 10,
-          ),
-          SizedBox(
-            height: 5.5.h,
-            child: TextField(
-              controller: emailController,
-              style: textStyle,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: "Foto",
-                labelStyle: textStyle,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
           ),
         ],
       ),

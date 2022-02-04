@@ -43,13 +43,18 @@ class _LoginPage extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
+        resizeToAvoidBottomInset: true,
+        body:  
+        Container(
+          height: double.infinity,
+        width: double.infinity,
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/BackgroundLogin.png"),
-                    fit: BoxFit.fill)),
+                    alignment: Alignment.topCenter,
+                    fit: BoxFit.fitWidth)),
+                    child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Row(
@@ -219,6 +224,6 @@ class _LoginPage extends State<Login> {
                   ),
                 ),
               ],
-            )));
+            ))));
   }
 }
