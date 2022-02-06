@@ -163,7 +163,7 @@ class _LoginPage extends State<Login> {
                                   onPressed: () {
                                     InfluencerApi()
                                         .postLogin(
-                                            "stef_scharre", "testWachtwoord3")
+                                            nameController.text, passwordController.text)
                                         .then((value) => {
                                               if (value.token == "")
                                                 {

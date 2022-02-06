@@ -24,7 +24,7 @@ class Influencer {
 
    String? infoovervolgers;
    String? badge;
-   String? aantalpunten;
+   String aantalpunten;
    List<String>? categories;
 
 
@@ -47,7 +47,7 @@ class Influencer {
   this.aantalvolgerstiktok, 
   this.infoovervolgers, 
    this.badge, 
-   this.aantalpunten, 
+  required this.aantalpunten, 
    this.categories, 
 });
   

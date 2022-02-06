@@ -38,8 +38,8 @@ class InfluencerApi {
     if (res.statusCode == 200) {
       Map<String, dynamic> map = json.decode(res.body);
       print(map.values);
-      if (map.values.last == "AuthCredsWrong") {
-        print("hey");
+      if (map.values.last == "AuthCredsInvalid") {
+        print("wrond login provided");
         return LoginData(token: "", creationtime: "", expiretime: "");
       } else {
         LoginData data = LoginData.fromJson(map.values.last);
