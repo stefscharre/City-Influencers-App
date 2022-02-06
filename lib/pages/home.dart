@@ -92,8 +92,11 @@ class _HomePage extends State<Home> {
                         ),
                       ),
             ),),]),
+            SizedBox(
+              height: 50.h,
+              child: _userListItems()
+              )
           
-          _userListItems()
           ]
           ),
 
@@ -111,12 +114,13 @@ class _HomePage extends State<Home> {
   }
   ListView _userListItems() {
     return ListView.builder(
+      
       itemCount: count,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int position) {
         return  Align(
-          alignment:position.isEven ? Alignment.center:Alignment.center,
+                  alignment:position.isEven ? Alignment.center:Alignment.center,
            child: CampaignWidget(
                   imageurl: 'assets/biefstukFriet.jpg',
                   text: cityList[position].naam,

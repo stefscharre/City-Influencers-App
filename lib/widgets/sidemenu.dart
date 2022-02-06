@@ -69,7 +69,7 @@ class NavDrawer extends StatelessWidget {
               decoration: BoxDecoration(
                 color: color1,
               ),
-              child: const Text('Drawer Header'),
+              child: const Text(''),
             )),
             ListTile(
               leading:  Icon(Icons.person,color: Colors.white,size: 3.h,),

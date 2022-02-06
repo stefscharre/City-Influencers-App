@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
 import 'package:city_influencers_app/models/city.dart';
@@ -12,6 +14,9 @@ import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
+import 'dart:ui' as ui;
 
 class RewardDetail extends StatefulWidget {
   const RewardDetail({Key? key}) : super(key: key);
@@ -24,7 +29,13 @@ class _RewardDetailPage extends State<RewardDetail> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
   Color color3 = HexColor("#34B6C6");
-  
+  bool blur = true;
+  String errormessage = "";
+
+  Timer claimCheckTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+    print("checking QR code availability");
+   });
+
   Influencer? influencer;
   TextEditingController adressController = TextEditingController();
   TextEditingController postcodeController = TextEditingController();
@@ -35,11 +46,11 @@ class _RewardDetailPage extends State<RewardDetail> {
     setState(() {
       influencer = Influencer(
           id: "",
-            wachtwoord: "",
+          wachtwoord: "",
           voornaam: "",
           familienaam: "",
           geslacht: "",
-          gebruikersnaam: "Stef",
+          gebruikersnaam: "",
           profielfoto: "",
           adres: "",
           postcode: "",
@@ -69,6 +80,25 @@ class _RewardDetailPage extends State<RewardDetail> {
     });
   }
 
+  void _processClaim(rewardPoints) {
+    var infPoints = int.parse(influencer!.aantalpunten);
+    if (infPoints >= rewardPoints) {
+      setState(() {
+        errormessage = "";
+        var newPoints = (infPoints - rewardPoints) as int;
+        influencer!.aantalpunten = newPoints.toString();
+
+        blur = !blur;
+      });
+    } else {
+      claimCheckTimer.cancel();
+      setState(() {
+        errormessage = "Not enough points to claim this reward!";
+        blur = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,13 +123,13 @@ class _RewardDetailPage extends State<RewardDetail> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                "A lommel voucher of €250",
+                "A voucher of €10",
                 style: TextStyle(
                     fontSize: 24, fontWeight: FontWeight.bold, color: color1),
               ),
             ),
             Padding(
-                padding: EdgeInsets.fromLTRB(5.w,5.w,0,0),
+                padding: EdgeInsets.fromLTRB(5.w, 5.w, 0, 0),
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -110,47 +140,61 @@ class _RewardDetailPage extends State<RewardDetail> {
                           color: color1),
                     ))),
             Padding(
-                padding: EdgeInsets.fromLTRB(5.w,2.w,0,5.w),
+                padding: EdgeInsets.fromLTRB(5.w, 2.w, 0, 5.w),
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "A lommel worth €20 to go shopping",
+                      "A QRcode of €10 to use in your local city",
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
                           color: color1),
                     ))),
-                     ElevatedButton(
-            
-            child: const Text('Get Reward'),
-                 style: ElevatedButton.styleFrom(
-                    primary: color3,
-                    padding:  EdgeInsets.symmetric(horizontal: 6.w),
-                    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(25), // <-- Radius
-    ),
-                    textStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold)),
-                onPressed: () {},
-
-              ),
-        
-          Padding(
-            padding:  EdgeInsets.only(top: 5.w),
-            child: SizedBox(
-            height: 60.w,      
-            width: 60.w,
-
-        child: Card(
-      shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-       
-
-        
-      )),
-          ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: errormessage != ""
+                  ? Text(
+                      errormessage,
+                      style: const TextStyle(fontSize: 18, color: Colors.red),
+                    )
+                  : const Text(""),
+            ),
+            ElevatedButton(
+              child: const Text('Claim Reward'),
+              style: ElevatedButton.styleFrom(
+                  primary: color3,
+                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25), // <-- Radius
+                  ),
+                  textStyle: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.bold)),
+              onPressed: () {
+                _processClaim(250);
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.w),
+              child: SizedBox(
+                  height: 50.w,
+                  width: 50.w,
+                  child: blur == true
+                      ? ImageFiltered(
+                          imageFilter:
+                              ui.ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+                          child: QrImage(
+                            data: 'This QR code has an embedded image as well',
+                            version: QrVersions.auto,
+                            size: 20,
+                            gapless: true,
+                          ))
+                      : QrImage(
+                          data: 'This QR code has an embedded image as well',
+                          version: QrVersions.auto,
+                          size: 20,
+                          gapless: true,
+                        )),
+            ),
           ]),
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
         ]));

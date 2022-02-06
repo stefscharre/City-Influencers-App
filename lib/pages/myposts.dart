@@ -48,7 +48,7 @@ class _MyPostsPage extends State<MyPosts> {
               padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
                child: Align(
               alignment: Alignment.centerLeft,
-              child:Text('Campaigns',
+              child:Text('My Posts',
                       style: TextStyle(
                           fontSize: 36, fontWeight: FontWeight.bold, color: color1),
                       )
@@ -75,8 +75,12 @@ class _MyPostsPage extends State<MyPosts> {
                         ),
                       ),
             ),),]),
+            SizedBox(
+              height: 50.h,
+              child: _myPosts()
+            )
           
-          _myPosts()
+          
           ]
           ),
 

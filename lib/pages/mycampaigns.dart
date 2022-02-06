@@ -93,7 +93,10 @@ class _MyCampaigns extends State<MyCampaigns> {
                       ),
             ),),]),
           
-          _userListItems()
+          SizedBox(
+              height: 50.h,
+              child: _userListItems()
+              )
           ]
           ),
 
@@ -116,7 +119,10 @@ class _MyCampaigns extends State<MyCampaigns> {
       shrinkWrap: true,
       
       itemBuilder: (BuildContext context, int position) {
+        
         return  Align(
+          heightFactor: 5.h,
+          widthFactor: 1.w,
           alignment:position.isEven ? Alignment.center:Alignment.center,
            child: CampaignWidget(
                   imageurl: 'assets/biefstukFriet.jpg',

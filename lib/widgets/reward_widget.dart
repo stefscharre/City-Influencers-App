@@ -39,22 +39,28 @@ class RewardWidget extends StatelessWidget {
         child: Column(
           
           children: <Widget>[
-            Text(
-                "Rewards" ,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 36, fontWeight: FontWeight.bold, color: color1),
-              ),
-              Text(       
-            "A Lommel voucher of €10",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16,
-                    fontWeight: FontWeight.bold, color: color1),
-          ), Text(
-              
-              "€100"
-              ,textAlign: TextAlign.center,
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: Text(
+                  "Reward" ,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold, color: color1),
+                ),
             ),
+              Text(       
+            "A voucher of €10",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20,
+                    fontWeight: FontWeight.bold, color: color1),
+          ), const Padding(
+            padding: EdgeInsets.only(top: 25.0),
+            child: Text(
+                
+                "100 Points"
+                ,textAlign: TextAlign.center,
+              ),
+          ),
           ])
        
 
