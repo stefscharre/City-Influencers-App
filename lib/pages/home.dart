@@ -1,5 +1,7 @@
+import 'package:city_influencers_app/apis/campaign_api.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
+import 'package:city_influencers_app/models/campaign.dart';
 import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/models/influencer.dart';
 
@@ -24,24 +26,21 @@ class Home extends StatefulWidget {
 class _HomePage extends State<Home> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
-  List<City> cityList = [];
+  List<Campaign> campaignList = [];
   int count = 0;
   late Future<Influencer?> influencerData;
   @override
   void initState() {
     super.initState();
    // _getinfluencer();
-    _getcities();
-
-    influencerData = InfluencerApi().getInfluencer();
-
+    _getcampaigns();
 
   }
  
-  void _getcities() {
-    CityApi.fetchCities().then((result) {
+  void _getcampaigns() {
+    CampaignApi().fetchCampaigns().then((result) {
       setState(() {
-        cityList = result;
+        campaignList = result;
         count = result.length;
       });
     });
@@ -119,7 +118,7 @@ class _HomePage extends State<Home> {
           alignment:position.isEven ? Alignment.center:Alignment.center,
            child: CampaignWidget(
                   imageurl: 'assets/biefstukFriet.jpg',
-                  text: cityList[position].naam,
+                  text: campaignList[position].titel,
                   price: 250)
         );
       },
