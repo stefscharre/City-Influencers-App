@@ -10,7 +10,9 @@ import 'package:city_influencers_app/widgets/homeBackground.dart';
 import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:cloudinary_public/cloudinary_public.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -30,6 +32,10 @@ class _ProfilePage extends State<Profile> {
   TextEditingController stadController = TextEditingController();
   TextEditingController nummerController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController pictureController = TextEditingController();
+
+  final cloudinary =
+      CloudinaryPublic('dbyo9rarj', 'CI-img-upload', cache: false);
 
   @override
   void initState() {
@@ -58,11 +64,12 @@ class _ProfilePage extends State<Profile> {
           infoovervolgers: "",
           badge: "",
           aantalpunten: "",
-          categories: []);
+          categories: [],
+          );
     });
     _getinfluencer();
   }
-  
+
   void _getinfluencer() {
     print("doet het");
     InfluencerApi().getInfluencer().then((result) {
@@ -75,17 +82,14 @@ class _ProfilePage extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: true,
         drawer: const NavDrawer(),
         body: Stack(children: [
-          SingleChildScrollView( 
-            
-          child: Column(children: <Widget>[
-            
+          SingleChildScrollView(
+              child: Column(children: <Widget>[
             Row(children: <Widget>[
               HomeBackgroundWidget(),
             ]),
-            
             _userDetails(),
             Padding(
               padding: EdgeInsets.only(top: 1.h),
@@ -110,17 +114,40 @@ class _ProfilePage extends State<Profile> {
   }
 
   void _saveInfluencer() {
-    influencer!.adres = adressController.text; // show the user info using the TextEditingController's
+    influencer!.adres = adressController
+        .text; // show the user info using the TextEditingController's
     influencer!.postcode = postcodeController.text;
     influencer!.stad = stadController.text;
     influencer!.telefoonnummer = nummerController.text;
     influencer!.emailadres = emailController.text;
-    
+    influencer!.profielfoto = pictureController.text;
+    print(influencer!.profielfoto);
+
     if (influencer!.adres != null) {
       print("hey");
       InfluencerApi().updateInfluencer(influencer!);
     } else {
       print("fail");
+    }
+  }
+
+  _getImageFromGallery() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    try {
+      if (image != null) {
+        CloudinaryResponse response = await cloudinary.uploadFile(
+          CloudinaryFile.fromFile(image.path,
+            folder: "Influencers",
+            resourceType: CloudinaryResourceType.Image),
+        );
+        pictureController.text = response.secureUrl;
+
+      }
+    } on CloudinaryException catch (e) {
+      print(e.message);
+      print(e.request);
     }
   }
 
@@ -181,6 +208,22 @@ class _ProfilePage extends State<Profile> {
                 ]),
               ],
             ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 3.h),
+            child: ElevatedButton(
+                      child: const Text('Upload profile picture'),
+                      style: ElevatedButton.styleFrom(
+                          primary: color1,
+                          padding: EdgeInsets.symmetric(horizontal: 6.w),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25), // <-- Radius
+                          ),
+                          textStyle: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        _getImageFromGallery();
+                      }),
           ),
           SizedBox(
             height: 5.5.h,
