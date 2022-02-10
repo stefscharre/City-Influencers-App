@@ -8,7 +8,7 @@ class Influencer {
    String? familienaam;
    String? geslacht;
    String? gebruikersnaam;
-   String? profielfoto;
+   String profielfoto;
   String? adres;
    String? postcode;
    String? stad;
@@ -32,7 +32,7 @@ class Influencer {
   this.familienaam, 
   this.geslacht, 
    this.gebruikersnaam, 
-  this.profielfoto, 
+  required this.profielfoto, 
   this.adres, 
   this.postcode, 
   this.stad, 

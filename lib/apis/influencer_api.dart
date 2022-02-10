@@ -81,6 +81,7 @@ class InfluencerApi {
   }
 
   Future<Influencer?> updateInfluencer(Influencer influencer) {
+    print("updating...");
     final update = {
       'id': influencer.id,
       'wachtwoord': influencer.wachtwoord,
@@ -102,6 +103,7 @@ class InfluencerApi {
       'infoaboutfollowers': influencer.infoovervolgers,
       'badge': influencer.badge,
       'totalpoints': influencer.aantalpunten,
+      'profilepicture': influencer.profielfoto
 
     };
     print(update);
@@ -214,7 +216,6 @@ class InfluencerApi {
                     badge: influencer.data[0]["badge"],
                     aantalpunten: influencer.data[0]["aantalpunten"],
                     categories: []);
-
                 return influencerData;
               }
             }
