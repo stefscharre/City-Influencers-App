@@ -1,7 +1,9 @@
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
+import 'package:city_influencers_app/apis/rewards_api.dart';
 import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/models/influencer.dart';
+import 'package:city_influencers_app/models/reward.dart';
 import 'package:city_influencers_app/pages/rewarddetail.dart';
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
 import 'package:city_influencers_app/widgets/campaign.dart';
@@ -25,6 +27,8 @@ class _RewardPage extends State<Reward> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
   Influencer? influencer;
+  List<RewardInfo>? rewards;
+  int count = 0;
   TextEditingController adressController = TextEditingController();
   TextEditingController postcodeController = TextEditingController();
   TextEditingController stadController = TextEditingController();
@@ -55,6 +59,8 @@ class _RewardPage extends State<Reward> {
           badge: "",
           aantalpunten: "",
           categories: []);
+
+      rewards = [];
     });
     _getinfluencer();
   }
@@ -63,6 +69,18 @@ class _RewardPage extends State<Reward> {
     InfluencerApi().getInfluencer().then((result) {
       setState(() {
         influencer = result;
+      });
+
+      _getRewards();
+    });
+  }
+
+  void _getRewards() {
+    RewardsApi().getInfluencerRewards().then((result) {
+      setState(() {
+        rewards = result;
+        count = rewards!.length;
+
       });
     });
   }
@@ -73,7 +91,7 @@ class _RewardPage extends State<Reward> {
         drawer: const NavDrawer(),
         body: Stack(children: [
           Column(children: <Widget>[
-            Row(children: <Widget>[
+            Row(children: const <Widget>[
               HomeBackgroundWidget(),
             ]),
             Padding(
@@ -88,22 +106,31 @@ class _RewardPage extends State<Reward> {
                         color: color1),
                   ),
                 )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RewardWidget(),
-                RewardWidget(),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RewardWidget(),
-                RewardWidget(),
-              ],
-            )
+            SizedBox(
+              height: 50.h,
+              child: _influencerRewards()
+              )
           ]),
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
         ]));
+  }
+
+  ListView _influencerRewards() {
+    return ListView.builder(
+      itemCount: count,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, int position) {
+        return Align(
+            alignment: position.isEven ? Alignment.center : Alignment.center,
+            child: RewardWidget(
+                id: rewards![position].id ?? "",
+                title: rewards![position].titel ?? "No title for this voucher",
+                points: rewards![position].tegoed ?? "",
+                description: rewards![position].omschrijving ?? "No description for this voucher" ,
+                isclaimed: rewards![position].isclaimed ?? "",
+                ));
+      },
+    );
   }
 }
