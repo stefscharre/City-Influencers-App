@@ -16,6 +16,7 @@ import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -27,108 +28,94 @@ class _HomePage extends State<Home> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
   List<Campaign> campaignList = [];
+  List<City> cityList = [];
   int count = 0;
   late Future<Influencer?> influencerData;
   @override
   void initState() {
     super.initState();
-   // _getinfluencer();
+    // _getinfluencer();
     _getcampaigns();
-
+    _getcities();
   }
- 
+
+  void _getcities() {
+    CityApi.fetchCities().then((result) {
+      setState(() {
+        cityList = result;
+
+        count = result.length;
+      });
+    });
+  }
+
   void _getcampaigns() {
     CampaignApi().fetchCampaigns().then((result) {
       setState(() {
         campaignList = result;
-        count = result.length;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-    
     return Scaffold(
-      
-      drawer: const NavDrawer(),
-        body: Stack(
-          children: [
-          Column(
-              children: <Widget>[
+        drawer: const NavDrawer(),
+        body: Stack(children: [
+          Column(children: <Widget>[
             Row(children: <Widget>[
               HomeBackgroundWidget(),
             ]),
             Padding(
-              padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
-               child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Campaigns',
+                padding: EdgeInsets.fromLTRB(3.5.w, 3.w, 0, 3.w),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Campaigns',
                       style: TextStyle(
-                          fontSize: 36, fontWeight: FontWeight.bold, color: color1),
-                      )
-              
-            )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-            SizedBox(
-                      width: 60.w,
-            child: Padding(
-              padding:  EdgeInsets.only(left:3.5.w),
-              
-              child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Search",
-                          prefixIcon: const Icon(Icons.search),
-                          filled: true,
-                          fillColor: color2,
-                          contentPadding: const EdgeInsets.all(0),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                      ),
-            ),),]),
-            SizedBox(
-              height: 50.h,
-              child: _userListItems()
-              )
-          
-          ]
-          ),
-
-          const Align(
-            
-            alignment: Alignment.bottomCenter,
-            
-            child: MenuWidget()
-          )]
-        )
-        
-        
-        );
-         
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: color1),
+                    ))),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              SizedBox(
+                width: 60.w,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 3.5.w),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Search",
+                      prefixIcon: const Icon(Icons.search),
+                      filled: true,
+                      fillColor: color2,
+                      contentPadding: const EdgeInsets.all(0),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  ),
+                ),
+              ),
+            ]),
+            SizedBox(height: 50.h, child: _userListItems())
+          ]),
+          const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
+        ]));
   }
+
   ListView _userListItems() {
     return ListView.builder(
-      
       itemCount: count,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int position) {
-        return  Align(
-                  alignment:position.isEven ? Alignment.center:Alignment.center,
-           child: CampaignWidget(
-                  imageurl: 'assets/biefstukFriet.jpg',
-                  text: campaignList[position].titel,
-                  price: 250)
-        );
+        return Align(
+            alignment: position.isEven ? Alignment.center : Alignment.center,
+            child: CampaignWidget(
+                imageurl: 'assets/biefstukFriet.jpg',
+                text: cityList[position].naam,
+                price: 250));
       },
     );
   }
-  
-
-
 }
