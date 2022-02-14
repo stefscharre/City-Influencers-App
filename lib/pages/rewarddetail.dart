@@ -101,9 +101,9 @@ class _RewardDetailPage extends State<RewardDetail> {
   }
 
   void _processClaim(rewardPoints) {
-    var infPoints = int.parse(influencer!.aantalpunten);
-    var points = int.parse(rewardPoints);
-    if (infPoints >= points) {
+    var infPoints = int.parse(influencer!.aantalpunten!);
+    if (infPoints >= rewardPoints) {
+
       setState(() {
         message = "";
         var newPoints = (infPoints - points);

@@ -87,7 +87,7 @@ class _HomeBackgroundWidget extends State<HomeBackgroundWidget> {
                                   image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: NetworkImage(
-                                snapshot.data!.profielfoto,
+                                snapshot.data!.profielfoto!,
                               )
                                   ),
                                   border: Border.all(
