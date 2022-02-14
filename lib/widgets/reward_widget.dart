@@ -10,7 +10,13 @@ class RewardWidget extends StatelessWidget {
   final String description;
   final String isclaimed;
 
-  const RewardWidget({Key? key, required this.id, required this.title, required this.points, required this.description, required this.isclaimed})
+  const RewardWidget(
+      {Key? key,
+      required this.id,
+      required this.title,
+      required this.points,
+      required this.description,
+      required this.isclaimed})
       : super(key: key);
 
   @override
@@ -18,7 +24,13 @@ class RewardWidget extends StatelessWidget {
     void _navigateToRewardDetail() async {
       await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => RewardDetail(id: id, description: description, title: title, isclaimed: isclaimed, points: points)),
+        MaterialPageRoute(
+            builder: (context) => RewardDetail(
+                id: id,
+                description: description,
+                title: title,
+                isclaimed: isclaimed,
+                points: points)),
       );
     }
 
@@ -45,24 +57,59 @@ class RewardWidget extends StatelessWidget {
                           child: SizedBox(
                               width: 55.w,
                               child: Column(children: <Widget>[
-                                Row(children: <Widget>[
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 4.5.w, right: 4.5.w, top: 6.h),
-                                    child: SizedBox(
-                                      width: 45.w,
-                                      height: 4.h,
-                                      child: Text(
-                                        points.toString() + " points",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: color1),
-                                      ),
-                                    ),
-                                  ),
-                                ]),
+                                isclaimed == "t"
+                                    ? Row(children: <Widget>[
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 4.5.w,
+                                                right: 4.5.w,
+                                                top: 6.h),
+                                            child: SizedBox(
+                                                width: 45.w,
+                                                height: 4.h,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(left: 10.w),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding: EdgeInsets.only(right: 2.w),
+                                                        child: Icon(Icons.check_sharp,
+                                                            color: color1,
+                                                            size: 20),
+                                                      ),
+                                                      Text(
+                                                        "Claimed",
+                                                        style: TextStyle(
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: color1,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                )))
+                                      ])
+                                    : Row(children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 4.5.w,
+                                              right: 4.5.w,
+                                              top: 6.h),
+                                          child: SizedBox(
+                                            width: 45.w,
+                                            height: 4.h,
+                                            child: Text(
+                                              points.toString() + " points",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: color1),
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
                                 SizedBox(
                                   width: 25.w,
                                   height: 4.h,
