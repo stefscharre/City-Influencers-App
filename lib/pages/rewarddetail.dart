@@ -107,12 +107,17 @@ class _RewardDetailPage extends State<RewardDetail> {
   }
 
   void _processClaim(rewardPoints) {
+    if (influencer!.aantalpunten == "") {
+      message = "Not enough points to claim this reward!";
+      return;
+    }
+
     var infPoints = int.parse(influencer!.aantalpunten!);
     var points = int.parse(rewardPoints);
     if (infPoints >= rewardPoints) {
 
       setState(() {
-        message = "";
+        message = "Reward claimed";
         var newPoints = (infPoints - points);
         influencer!.aantalpunten = newPoints.toString();
         print(widget.id);
@@ -217,7 +222,7 @@ class _RewardDetailPage extends State<RewardDetail> {
               child: message != ""
                   ? Text(
                       message,
-                      style: const TextStyle(fontSize: 18, color: Colors.red),
+                      style: TextStyle(fontSize: 18, color: color3),
                     )
                   : const Text(""),
             ),

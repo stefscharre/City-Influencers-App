@@ -94,9 +94,10 @@ class RewardsApi {
             headers: headers);
 
         if (res.statusCode == 200) {
-          return "Reward succesfully claimed";
         }
       });
+      return "Reward succesfully claimed";
+
     } catch (e) {
       rethrow;
     }
