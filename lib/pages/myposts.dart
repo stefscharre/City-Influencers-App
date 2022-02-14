@@ -41,7 +41,7 @@ class _MyPostsPage extends State<MyPosts> {
           children: [
           Column(
               children: <Widget>[
-            Row(children: <Widget>[
+            Row(children: const <Widget>[
               HomeBackgroundWidget(),
             ]),
             Padding(
