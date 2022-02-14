@@ -13,6 +13,8 @@ import 'package:city_influencers_app/widgets/homeBackground.dart';
 import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -45,6 +47,9 @@ class _RewardDetailPage extends State<RewardDetail> {
   Color color3 = HexColor("#34B6C6");
   bool blur = true;
   String message = "";
+  String token = "";
+
+  final secureStorage = const FlutterSecureStorage();
 
   Timer claimCheckTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
     print("checking QR code availability");
@@ -57,6 +62,7 @@ class _RewardDetailPage extends State<RewardDetail> {
   @override
   void initState() {
     super.initState();
+    _getToken();
     setState(() {
       influencer = Influencer(
           id: "",
@@ -123,6 +129,17 @@ class _RewardDetailPage extends State<RewardDetail> {
         blur = true;
       });
     }
+  }
+
+  void _getToken() async {
+      await secureStorage.read(key: 'token').then((value) => {
+        if (value != null) {
+          setState(() {
+            token = value;
+          })
+        }
+        
+      }); 
   }
 
   @override
@@ -229,13 +246,13 @@ class _RewardDetailPage extends State<RewardDetail> {
                           imageFilter:
                               ui.ImageFilter.blur(sigmaY: 5, sigmaX: 5),
                           child: QrImage(
-                            data: 'www.google.com',
+                            data: token + "," + widget.id ,
                             version: QrVersions.auto,
                             size: 20,
                             gapless: true,
                           ))
                       : QrImage(
-                          data: 'www.google.com',
+                          data: token + "," + widget.id,
                           version: QrVersions.auto,
                           size: 20,
                           gapless: true,
