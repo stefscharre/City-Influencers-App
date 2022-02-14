@@ -81,7 +81,7 @@ class _RewardDetailPage extends State<RewardDetail> {
   }
 
   void _processClaim(rewardPoints) {
-    var infPoints = int.parse(influencer!.aantalpunten);
+    var infPoints = int.parse(influencer!.aantalpunten!);
     if (infPoints >= rewardPoints) {
       setState(() {
         errormessage = "";
