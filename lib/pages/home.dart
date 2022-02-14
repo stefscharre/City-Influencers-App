@@ -27,7 +27,7 @@ class Home extends StatefulWidget {
 class _HomePage extends State<Home> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
-  List<Campaign> campaignList = [];
+  List<Campaign>? campaignList = [];
   List<City> cityList = [];
   int count = 0;
   late Future<Influencer?> influencerData;
@@ -53,6 +53,7 @@ class _HomePage extends State<Home> {
     CampaignApi().fetchCampaigns().then((result) {
       setState(() {
         campaignList = result;
+        count = campaignList!.length;
       });
     });
   }
@@ -113,7 +114,7 @@ class _HomePage extends State<Home> {
             alignment: position.isEven ? Alignment.center : Alignment.center,
             child: CampaignWidget(
                 imageurl: 'assets/biefstukFriet.jpg',
-                text: cityList[position].naam,
+                text: campaignList![position].titel,
                 price: 250));
       },
     );
