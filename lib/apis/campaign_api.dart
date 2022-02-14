@@ -1,3 +1,4 @@
+import 'package:city_influencers_app/models/apiResponse.dart';
 import 'package:city_influencers_app/models/campaign.dart';
 import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/models/city_api_response.dart';
@@ -42,15 +43,19 @@ Future<String> readSecureToken() async {
           };
       Response res = await get(Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/tasks"));
       if (res.statusCode == 200) {
+         final jsonRes = json.decode(res.body);
+            print(jsonRes);
         //CityApiResponse body = jsonDecode(res.body);
-        Map<String, dynamic> map = json.decode(res.body);
 
+ApiResponse data = ApiResponse.fromJson(jsonRes);
         // ignore: unused_local_variable
-        List<dynamic> data = map["data"];
+        List<Campaign> campaigns = [];
 
-        List<Campaign> campaigns = data.map((dynamic item) => Campaign.fromJson(item),
-        ).toList();
-
+            for (var element in data.data) {
+              print(element);
+              final reward = Campaign.fromJson(element);
+              campaigns.add(reward);
+            }
         return campaigns;
 
       } else {
