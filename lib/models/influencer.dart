@@ -8,7 +8,7 @@ class Influencer {
    String? familienaam;
    String? geslacht;
    String? gebruikersnaam;
-   String profielfoto;
+   String? profielfoto;
   String? adres;
    String? postcode;
    String? stad;
@@ -24,7 +24,7 @@ class Influencer {
 
    String? infoovervolgers;
    String? badge;
-   String aantalpunten;
+   String? aantalpunten;
    List<String>? categories;
 
 

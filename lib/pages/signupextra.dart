@@ -270,8 +270,7 @@ class _SignUpExtra extends State<SignUpExtra> {
   }
 
   void _updateInfluencer() {
-    influencer!.familienaam = naamController
-        .text; // show the user info using the TextEditingController's
+    influencer!.familienaam = naamController.text; // show the user info using the TextEditingController's
     influencer!.voornaam = voornaamController.text;
     influencer!.geslacht = geslachtController.text;
 
