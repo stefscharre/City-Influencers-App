@@ -17,11 +17,16 @@ class HomeBackgroundWidget extends StatefulWidget {
 class _HomeBackgroundWidget extends State<HomeBackgroundWidget> {
   Color color1 = HexColor("#4C525C");
   late Future<Influencer?> influencer;
+  String points = "";
 
   @override
   void initState() {
     super.initState();
-    influencer = InfluencerApi().getInfluencer();
+    influencer = InfluencerApi().getInfluencer().then((value) {
+      setState(() {
+        points = value!.aantalpunten!;
+      });
+    });
   }
 
   @override
@@ -134,8 +139,22 @@ class _HomeBackgroundWidget extends State<HomeBackgroundWidget> {
                       ),
                     ),
                   ),
+                  
                 ],
               ),
+                  Center(
+                    
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(right: 15.w),
+                        child: Text(points + " points", style: TextStyle(
+                          fontSize: 20,
+                        )),
+                      )
+                    ],)
+                  ),
             ])));
   }
 }

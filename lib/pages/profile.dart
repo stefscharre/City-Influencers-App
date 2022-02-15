@@ -126,6 +126,7 @@ Future printDetails(String username) async {
   }
  
   void _saveInfluencer() {
+    print(pictureController.text);
     influencer!.adres = adressController.text; // show the user info using the TextEditingController's
     influencer!.postcode = postcodeController.text;
     influencer!.stad = stadController.text;
@@ -153,7 +154,10 @@ Future printDetails(String username) async {
             folder: "Influencers",
             resourceType: CloudinaryResourceType.Image),
         );
+        setState(() {
         pictureController.text = response.secureUrl;
+
+        });
 
       }
     } on CloudinaryException catch (e) {
