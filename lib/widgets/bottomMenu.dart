@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:city_influencers_app/pages/home.dart';
+import 'package:city_influencers_app/pages/messages.dart';
 import 'package:city_influencers_app/pages/post.dart';
 import 'package:city_influencers_app/pages/profile.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class MenuWidget extends StatelessWidget {
 void _navigateToMessage() async {
       await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Post()),
+        MaterialPageRoute(builder: (context) => const Messages()),
       );
     }
 

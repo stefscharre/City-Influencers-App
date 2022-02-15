@@ -1,8 +1,10 @@
+import 'package:city_influencers_app/pages/login.dart';
 import 'package:city_influencers_app/pages/mycampaigns.dart';
 import 'package:city_influencers_app/pages/myposts.dart';
 import 'package:city_influencers_app/pages/profile.dart';
 import 'package:city_influencers_app/pages/rewards.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:city_influencers_app/widgets/shared/hexcolor.dart';
 class NavDrawer extends StatelessWidget {
@@ -22,10 +24,26 @@ class NavDrawer extends StatelessWidget {
     
     
   }
+  final secureStorage = const FlutterSecureStorage();
+  IOSOptions _getIOSOptions() => const IOSOptions(
+        accessibility: IOSAccessibility.first_unlock,
+      );
+
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
   void _navigateToRewards() async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const Reward()),
+    );
+    
+    
+  }
+  void _logout() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Login()),
     );
     
     
@@ -161,6 +179,25 @@ class NavDrawer extends StatelessWidget {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
+              },
+            ),
+            const Divider(
+            thickness: 1,
+            indent: 20,
+            endIndent:40,
+            color: Colors.white,
+          ),
+            ListTile(
+               leading:  Icon(Icons.logout,color: Colors.white,size: 3.h,),
+              title: const Text("Logout",style: TextStyle(fontSize: 24,
+                          fontWeight: FontWeight.bold, color: Colors.white)),
+              onTap: () {
+                _logout();
+                secureStorage.write(
+            key: 'token',
+            value: '',
+            iOptions: _getIOSOptions(),
+            aOptions: _getAndroidOptions());
               },
             ),
           ],
