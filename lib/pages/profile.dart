@@ -73,7 +73,7 @@ class _ProfilePage extends State<Profile> {
           );
     });
     _getinfluencer();
-    printDetails("stefscharre");
+    
   }
 Future printDetails(String username) async {
     await flutterInsta.getProfileData(username);
@@ -86,6 +86,7 @@ Future printDetails(String username) async {
     InfluencerApi().getInfluencer().then((result) {
       setState(() {
         influencer = result;
+        printDetails("${influencer?.gebruikersnaaminstagram}");
       });
     });
   }
@@ -98,7 +99,7 @@ Future printDetails(String username) async {
         body: Stack(children: [
           SingleChildScrollView(
               child: Column(children: <Widget>[
-            Row(children: <Widget>[
+            Row(children:const <Widget>[
               HomeBackgroundWidget(),
             ]),
             _userDetails(),
@@ -125,8 +126,7 @@ Future printDetails(String username) async {
   }
  
   void _saveInfluencer() {
-    influencer!.adres = adressController
-        .text; // show the user info using the TextEditingController's
+    influencer!.adres = adressController.text; // show the user info using the TextEditingController's
     influencer!.postcode = postcodeController.text;
     influencer!.stad = stadController.text;
     influencer!.telefoonnummer = nummerController.text;

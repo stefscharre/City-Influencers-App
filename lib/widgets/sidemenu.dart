@@ -165,22 +165,7 @@ class NavDrawer extends StatelessWidget {
                 // Then close the drawer
               },
             ),
-            const Divider(
-            thickness: 1,
-            indent: 20,
-            endIndent:40,
-            color: Colors.white,
-          ),
-            ListTile(
-               leading:  Icon(Icons.settings,color: Colors.white,size: 3.h,),
-              title: const Text("Settings",style: TextStyle(fontSize: 24,
-                          fontWeight: FontWeight.bold, color: Colors.white)),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-              },
-            ),
+          
             const Divider(
             thickness: 1,
             indent: 20,
