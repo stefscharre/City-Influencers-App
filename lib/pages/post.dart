@@ -20,7 +20,6 @@ import 'package:image_picker/image_picker.dart';
 class Post extends StatefulWidget {
   final Campaign campaign;
 
-
   const Post({Key? key, required this.campaign}) : super(key: key);
 
   @override
@@ -37,6 +36,9 @@ class _PostPage extends State<Post> {
   late List<String?>? campaignListTitles = [];
   late List<Campaign?>? campaignList = [];
 
+  bool postCreated = false;
+  String message = "";
+
   final cloudinary =
       CloudinaryPublic('dbyo9rarj', 'CI-img-upload', cache: false);
 
@@ -44,7 +46,6 @@ class _PostPage extends State<Post> {
   void initState() {
     super.initState();
     setState(() {});
-
   }
 
   _getImageFromGallery() async {
@@ -71,8 +72,13 @@ class _PostPage extends State<Post> {
     post.foto = pictureController.text;
     post.beschrijving = descriptionController.text;
 
-    PostsApi().createPosts(post);
-
+    PostsApi().createPosts(post).then((value) {
+      setState(() {
+        postCreated = true;
+        message = value!;
+      });
+    
+    });
   }
 
   @override
@@ -84,18 +90,22 @@ class _PostPage extends State<Post> {
             Row(children: <Widget>[
               HomeBackgroundWidget(),
             ]),
-            Padding(
-                padding: EdgeInsets.fromLTRB(3.5.w, 3.w, 0, 3.w),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "New post",
-                    style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        color: color1),
-                  ),
-                )),
+            postCreated == true
+                ? Center(
+                    child: Text(message),
+                  )
+                : Padding(
+                    padding: EdgeInsets.fromLTRB(3.5.w, 3.w, 0, 3.w),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "New post",
+                        style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: color1),
+                      ),
+                    )),
             _post()
           ]),
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
@@ -104,10 +114,6 @@ class _PostPage extends State<Post> {
 
   _post() {
     TextStyle? textStyle = Theme.of(context).textTheme.bodyText1;
-
-    /* adressController.text = influencer!.adres; // show the user info using the TextEditingController's
-    postcodeController.text = influencer!.postcode;
-    stadController.text = influencer!.stad; */
 
     return Padding(
       padding: const EdgeInsets.all(10.0),

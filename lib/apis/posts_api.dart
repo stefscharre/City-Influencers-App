@@ -57,7 +57,7 @@ class PostsApi {
         if (res.statusCode == 200) {
         }
       });
-      return "Reward succesfully claimed";
+      return "Post succesfully created";
 
     } catch (e) {
       rethrow;
