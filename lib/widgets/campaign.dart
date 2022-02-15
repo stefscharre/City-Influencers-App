@@ -1,3 +1,4 @@
+import 'package:city_influencers_app/models/campaign.dart';
 import 'package:city_influencers_app/pages/detailpage.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -8,13 +9,15 @@ class CampaignWidget extends StatelessWidget {
   final String text;
   final String price;
   final String description;
+  final Campaign campaign;
 
   const CampaignWidget(
       {Key? key,
       required this.imageurl,
       required this.text,
       required this.price,
-      required this.description})
+      required this.description,
+      required this.campaign})
       : super(key: key);
 
   @override
@@ -22,7 +25,7 @@ class CampaignWidget extends StatelessWidget {
     void _navigateToDetail() async {
       await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => DetailPage(description: description, imageurl: imageurl, title: text, price: price)),
+        MaterialPageRoute(builder: (context) => DetailPage(description: description, imageurl: imageurl, title: text, price: price, campaign: campaign)),
       );
     }
 

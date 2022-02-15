@@ -1,3 +1,4 @@
+import 'package:city_influencers_app/models/campaign.dart';
 import 'package:city_influencers_app/pages/post.dart';
 import 'package:city_influencers_app/pages/signup.dart';
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
@@ -13,13 +14,15 @@ class DetailPage extends StatefulWidget {
   final String title;
   final String price;
   final String description;
+  final Campaign campaign;
 
   const DetailPage(
       {Key? key,
       required this.imageurl,
       required this.title,
       required this.price,
-      required this.description})
+      required this.description,
+      required this.campaign})
       : super(key: key);
 
   @override
@@ -31,10 +34,10 @@ class _DetailPage extends State<DetailPage> {
   Color color2 = HexColor("#EBEBEB");
   Color color3 = HexColor("#34B6C6");
 
-  void _navigateToPost() async {
+  void _navigateToPost(Campaign campaignData) async {
     await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Post()),
+        MaterialPageRoute(builder: (context) => Post(campaign: campaignData)),
       );
   }
 
@@ -126,7 +129,7 @@ class _DetailPage extends State<DetailPage> {
                     ),
                     textStyle: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.bold)),
-                onPressed: () {_navigateToPost();},
+                onPressed: () {_navigateToPost(widget.campaign);},
               ),
             ),
           ),

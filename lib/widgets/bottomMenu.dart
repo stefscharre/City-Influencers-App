@@ -28,12 +28,6 @@ class MenuWidget extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const Profile()),
       );
     }
-    void _navigateToPost() async {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const Post()),
-      );
-    }
 void _navigateToMessage() async {
       await Navigator.push(
         context,
@@ -66,14 +60,6 @@ void _navigateToMessage() async {
                 onPressed: () {
                   _navigateToHome();
                 },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.add,
-                  color: color1,
-                  size: 40,
-                ),
-                onPressed: () {_navigateToPost();},
               ),
               IconButton(
                 icon: Icon(
