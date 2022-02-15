@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:city_influencers_app/pages/detailpage.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -13,13 +15,7 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _navigateToDetail(int id) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const DetailPage()),
-    );
     
-  }
     Color color1 = HexColor("#34B6C6");
     Color color2 = HexColor("#B8B8B8");
     return Padding(
@@ -82,7 +78,7 @@ class MessageWidget extends StatelessWidget {
                     textStyle: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold)),
-                onPressed: () {_navigateToDetail(1);},
+                onPressed: () {},
 
               ),
         

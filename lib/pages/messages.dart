@@ -14,6 +14,7 @@ import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 class Messages extends StatefulWidget {
   const Messages({Key? key}) : super(key: key);
 
@@ -30,14 +31,12 @@ class _MessagePage extends State<Messages> {
   @override
   void initState() {
     super.initState();
-   // _getinfluencer();
+    // _getinfluencer();
     _getcities();
 
     influencerData = InfluencerApi().getInfluencer();
-
-
   }
- 
+
   void _getcities() {
     CityApi.fetchCities().then((result) {
       setState(() {
@@ -49,63 +48,36 @@ class _MessagePage extends State<Messages> {
 
   @override
   Widget build(BuildContext context) {
-
-    
     return Scaffold(
-      
-      drawer: const NavDrawer(),
-        body: Stack(
-          children: [
-          Column(
-              children: <Widget>[
+        drawer: const NavDrawer(),
+        body: Stack(children: [
+          Column(children: <Widget>[
             Row(children: <Widget>[
               HomeBackgroundWidget(),
             ]),
             Padding(
-              padding: EdgeInsets.fromLTRB(3.5.w,3.w,0,3.w),
-               child: Align(
-              alignment: Alignment.centerLeft,
-              child:Text('Messages',
+                padding: EdgeInsets.fromLTRB(3.5.w, 3.w, 0, 3.w),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Messages',
                       style: TextStyle(
-                          fontSize: 36, fontWeight: FontWeight.bold, color: color1),
-                      )
-              
-            )),
-          
-          _messages()
-          ]
-          ),
-
-          const Align(
-            
-            alignment: Alignment.bottomCenter,
-            
-            child: MenuWidget()
-          )]
-        )
-        
-        
-        );
-         
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: color1),
+                    ))),SizedBox(height: 50.h,
+            child: ListView.separated(
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(      
+                      trailing: const Text(
+                        "Hallo",
+                        style: TextStyle(color: Colors.green, fontSize: 15),
+                      ),
+                      title: Text(cityList[index].naam));
+                }, separatorBuilder: (BuildContext context, int index) { return Divider(); },)),
+          ]),
+          const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
+        ]));
   }
-  ListView _messages() {
-    return ListView.builder(
-      itemCount: count,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      
-      itemBuilder: (BuildContext context, int position) {
-        return  Align(
-          alignment:position.isEven ? Alignment.center:Alignment.center,
-           child: CampaignWidget(
-                  imageurl: 'assets/biefstukFriet.jpg',
-                  text: cityList[position].naam,
-                  price: "change this!")
-        );
-      },
-    );
-  }
-  
-
-
 }

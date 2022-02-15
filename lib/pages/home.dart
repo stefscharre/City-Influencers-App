@@ -103,6 +103,7 @@ class _HomePage extends State<Home> {
         return Align(
             alignment: position.isEven ? Alignment.center : Alignment.center,
             child: CampaignWidget(
+                description: campaignList![position].omschrijving ?? "No description",
                 imageurl: campaignList![position].foto ?? "no photo",
                 text: campaignList![position].titel ?? "No title",
                 price: campaignList![position].aantalpuntenwaard ?? "No points"
