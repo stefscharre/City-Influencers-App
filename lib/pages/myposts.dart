@@ -1,9 +1,11 @@
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
+import 'package:city_influencers_app/apis/posts_api.dart';
 import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/models/influencer.dart';
 
 import 'package:city_influencers_app/models/influencerApiResponse.dart';
+import 'package:city_influencers_app/models/post.dart';
 import 'package:city_influencers_app/pages/signup.dart';
 import 'package:insta_public_api/insta_public_api.dart';
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
@@ -26,9 +28,26 @@ class _MyPostsPage extends State<MyPosts> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
   List<City> cityList = [];
+  List<PostData>? postsList = [];
   int count = 0;
   late Future<Influencer?> influencerData;
 
+@override
+  void initState() {
+    super.initState();
+    // _getinfluencer();
+    _getPosts();
+  }
+
+  void _getPosts() {
+    PostsApi().getPosts().then((value) {
+      setState(() {
+        postsList = value;
+        print(postsList);
+      });
+    
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,11 +123,12 @@ class _MyPostsPage extends State<MyPosts> {
   crossAxisCount: 2,
   shrinkWrap: true,
   // Generate 100 widgets that display their index in the List.
-  children: List.generate(100, (index) {
-    return const Center(
-      child: PostWidget(),
+  children: List.generate(postsList!.length, (index) {
+    
+    return Center(
+      child: PostWidget(post: postsList![index]),
     );
-  }),
+  }, growable: true),
 );
   
   }

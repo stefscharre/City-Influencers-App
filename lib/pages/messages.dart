@@ -67,7 +67,7 @@ class _MessagePage extends State<Messages> {
                           color: color1),
                     ))),SizedBox(height: 50.h,
             child: ListView.separated(
-                itemCount: 5,
+                itemCount: count,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(      
                       trailing: const Text(
