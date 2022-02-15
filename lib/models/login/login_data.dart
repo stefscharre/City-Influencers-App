@@ -5,7 +5,7 @@ class LoginData {
     required this.creationtime,
     required this.expiretime,
   });
-    String token;
+  String token;
   String creationtime;
   String expiretime;
 

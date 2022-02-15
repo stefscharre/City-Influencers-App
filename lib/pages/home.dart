@@ -27,7 +27,7 @@ class Home extends StatefulWidget {
 class _HomePage extends State<Home> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
-  List<Campaign>? campaignList = [];
+  late List<Campaign>? campaignList = [];
   List<City> cityList = [];
   int count = 0;
   late Future<Influencer?> influencerData;
@@ -35,24 +35,14 @@ class _HomePage extends State<Home> {
   void initState() {
     super.initState();
     // _getinfluencer();
-    _getcampaigns();
-    _getcities();
+    _getCampaigns();
   }
 
-  void _getcities() {
-    CityApi.fetchCities().then((result) {
-      setState(() {
-        cityList = result;
-
-        count = result.length;
-      });
-    });
-  }
-
-  void _getcampaigns() {
+  void _getCampaigns() {
     CampaignApi().fetchCampaigns().then((result) {
       setState(() {
         campaignList = result;
+        print(campaignList!.length);
         count = campaignList!.length;
       });
     });
@@ -98,7 +88,7 @@ class _HomePage extends State<Home> {
                 ),
               ),
             ]),
-            SizedBox(height: 50.h, child: _userListItems())
+            SizedBox(height: 50.h, child: count == 0 ? const Text("There are no campains") : _userListItems())
           ]),
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
         ]));
@@ -113,9 +103,11 @@ class _HomePage extends State<Home> {
         return Align(
             alignment: position.isEven ? Alignment.center : Alignment.center,
             child: CampaignWidget(
-                imageurl: 'assets/biefstukFriet.jpg',
-                text: campaignList![position].titel,
-                price: 250));
+                description: campaignList![position].omschrijving ?? "No description",
+                imageurl: campaignList![position].foto ?? "no photo",
+                text: campaignList![position].titel ?? "No title",
+                price: campaignList![position].aantalpuntenwaard ?? "No points"
+                ));
       },
     );
   }

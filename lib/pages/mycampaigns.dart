@@ -1,5 +1,7 @@
+import 'package:city_influencers_app/apis/campaign_api.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:city_influencers_app/apis/influencer_api.dart';
+import 'package:city_influencers_app/models/campaign.dart';
 import 'package:city_influencers_app/models/city.dart';
 import 'package:city_influencers_app/models/influencer.dart';
 
@@ -25,6 +27,7 @@ class _MyCampaigns extends State<MyCampaigns> {
   Color color1 = HexColor("#4C525C");
   Color color2 = HexColor("#EBEBEB");
   List<City> cityList = [];
+  late List<Campaign>? campaignList = [];
   int count = 0;
   late Future<Influencer?> influencerData;
   @override
@@ -32,10 +35,22 @@ class _MyCampaigns extends State<MyCampaigns> {
     super.initState();
    // _getinfluencer();
     _getcities();
+    _getCampaigns();
 
     influencerData = InfluencerApi().getInfluencer();
 
 
+  }
+
+    void _getCampaigns() {
+    CampaignApi().fetchCampaigns().then((result) {
+      setState(() {
+        campaignList = result;
+        print("camaaaaaaaaain count");
+        print(campaignList!.length);
+        count = campaignList!.length;
+      });
+    });
   }
  
   void _getcities() {
@@ -112,23 +127,20 @@ class _MyCampaigns extends State<MyCampaigns> {
         );
          
   }
-  ListView _userListItems() {
+   ListView _userListItems() {
     return ListView.builder(
       itemCount: count,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      
       itemBuilder: (BuildContext context, int position) {
-        
-        return  Align(
-          heightFactor: 5.h,
-          widthFactor: 1.w,
-          alignment:position.isEven ? Alignment.center:Alignment.center,
-           child: CampaignWidget(
-                  imageurl: 'assets/biefstukFriet.jpg',
-                  text: cityList[position].naam,
-                  price: 250)
-        );
+        return Align(
+            alignment: position.isEven ? Alignment.center : Alignment.center,
+            child: CampaignWidget(
+                description: campaignList![position].omschrijving ?? "No description",
+                imageurl: campaignList![position].foto ?? "no photo",
+                text: campaignList![position].titel ?? "No title",
+                price: campaignList![position].aantalpuntenwaard ?? "No points"
+                ));
       },
     );
   }
