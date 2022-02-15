@@ -113,7 +113,10 @@ class _RewardDetailPage extends State<RewardDetail> {
 
     var infPoints = int.parse(influencer!.aantalpunten!);
     var points = int.parse(rewardPoints);
-    if (infPoints >= rewardPoints) {
+    print("pointsssssssssss");
+    print(infPoints);
+    print(points);
+    if (infPoints >= points) {
 
       setState(() {
         message = "Reward claimed";
@@ -152,8 +155,8 @@ class _RewardDetailPage extends State<RewardDetail> {
         drawer: const NavDrawer(),
         body: Stack(children: [
           Column(children: <Widget>[
-            Row(children: const <Widget>[
-              HomeBackgroundWidget(),
+            Row(children: <Widget>[
+              HomeBackgroundWidget(points: influencer!.aantalpunten ,),
             ]),
             Padding(
                 padding: EdgeInsets.fromLTRB(3.5.w, 3.w, 0, 10.w),
