@@ -42,7 +42,6 @@ class _HomePage extends State<Home> {
     CampaignApi().fetchCampaigns().then((result) {
       setState(() {
         campaignList = result;
-        print(campaignList!.length);
         count = campaignList!.length;
       });
     });

@@ -37,7 +37,8 @@ class _ProfilePage extends State<Profile> {
   TextEditingController stadController = TextEditingController();
   TextEditingController nummerController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController pictureController = TextEditingController();
+
+  String pictureURL = "";
 
   final cloudinary =
       CloudinaryPublic('dbyo9rarj', 'CI-img-upload', cache: false);
@@ -75,18 +76,11 @@ class _ProfilePage extends State<Profile> {
     _getinfluencer();
     
   }
-Future printDetails(String username) async {
-    await flutterInsta.getProfileData(username);
-    setState(() {
-      followers = flutterInsta.followers; //number of followers
-    });
-  }
+
   void _getinfluencer() {
-    print("doet het");
-    InfluencerApi().getInfluencer().then((result) {
+     InfluencerApi().getInfluencer().then((result) {
       setState(() {
         influencer = result;
-        printDetails("${influencer?.gebruikersnaaminstagram}");
       });
     });
   }
@@ -126,20 +120,20 @@ Future printDetails(String username) async {
   }
  
   void _saveInfluencer() {
-    print(pictureController.text);
+    print("ctrllll");
+    print(pictureURL);
+    print(influencer);
     influencer!.adres = adressController.text; // show the user info using the TextEditingController's
     influencer!.postcode = postcodeController.text;
     influencer!.stad = stadController.text;
     influencer!.telefoonnummer = nummerController.text;
     influencer!.emailadres = emailController.text;
-    influencer!.profielfoto = pictureController.text;
+    influencer!.profielfoto = pictureURL;
     print(influencer!.profielfoto);
 
     if (influencer!.adres != null) {
-      print("hey");
       InfluencerApi().updateInfluencer(influencer!);
     } else {
-      print("fail");
     }
   }
 
@@ -155,7 +149,10 @@ Future printDetails(String username) async {
             resourceType: CloudinaryResourceType.Image),
         );
         setState(() {
-        pictureController.text = response.secureUrl;
+          print("resss");
+          print(response.secureUrl);
+          pictureURL = response.secureUrl;
+          print(pictureURL);
 
         });
 
@@ -204,8 +201,8 @@ Future printDetails(String username) async {
                     'assets/instagram.png',
                     height: 5.h,
                   ),
-                   Text("$followers",
-                      style:const TextStyle(
+                   const Text("456",
+                      style:TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),

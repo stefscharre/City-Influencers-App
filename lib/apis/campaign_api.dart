@@ -44,7 +44,7 @@ class CampaignApi {
           };
           Response res = await get(
               Uri.parse(
-                  "http://api-ci.westeurope.cloudapp.azure.com:8080/api/tasks"),
+                  "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/tasks"),
               headers: headers);
           if (res.statusCode == 200) {
             final jsonRes = json.decode(res.body);
@@ -56,8 +56,6 @@ class CampaignApi {
             print(data.data[0]);
 
             for (var element in data.data) {
-              print("testtttttttttttttttttttttt");
-              print(element);
               final campaign = Campaign.fromJson(element);
               campaigns.add(campaign);
             }
@@ -67,7 +65,6 @@ class CampaignApi {
           }
         }
       } catch (e) {
-        print("this catch");
         print(e);
         rethrow;
       }

@@ -67,7 +67,6 @@ class _SignUpExtraAdress extends State<SignUpExtraAdress> {
   }
 
   void _getinfluencer() {
-    print("doet het");
     InfluencerApi().getInfluencer().then((result) {
       setState(() {
         influencer = result;
@@ -260,7 +259,6 @@ class _SignUpExtraAdress extends State<SignUpExtraAdress> {
     if (influencer!.adres != null) {
       InfluencerApi().updateInfluencer(influencer!);
     } else {
-      print("fail");
     }
   }
 }

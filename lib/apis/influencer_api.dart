@@ -30,15 +30,17 @@ class InfluencerApi {
       'type': "influencer"
     };
 
+    print(login);
+
     Response res = await post(
-      Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/login"),
+      Uri.parse("http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/login"),
       body: login,
     );
     print(res.body);
     if (res.statusCode == 200) {
       Map<String, dynamic> map = json.decode(res.body);
       print(map.values);
-      if (map.values.last == "AuthCredsInvalid") {
+      if (map.values.last == "AuthCredsWrong") {
         print("wrong login provided");
         return LoginData(token: "", creationtime: "", expiretime: "");
       } else {
@@ -68,7 +70,7 @@ class InfluencerApi {
 
     Response res = await post(
       Uri.parse(
-          "http://api-ci.westeurope.cloudapp.azure.com:8080/api/register"),
+          "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/register"),
       body: signup,
     );
     print(res.body);
@@ -124,7 +126,7 @@ class InfluencerApi {
         print(influencer.adres);
           Response res = await put(
             Uri.parse(
-                "http://api-ci.westeurope.cloudapp.azure.com:8080/api/accounts"),
+                "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/accounts"),
                 body:jsonEncode(update),
             headers: headers
             
@@ -169,7 +171,7 @@ class InfluencerApi {
           };
           Response res = await get(
               Uri.parse(
-                  "http://api-ci.westeurope.cloudapp.azure.com:8080/api/me"),
+                  "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/me"),
               headers: headers);
           if (res.statusCode == 200) {
             Map<String, dynamic> map = json.decode(res.body);
@@ -182,7 +184,7 @@ class InfluencerApi {
             if (influencerid != "") {
               Response res = await get(
                   Uri.parse(
-                      "http://api-ci.westeurope.cloudapp.azure.com:8080/api/influencers/" +
+                      "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/influencers/" +
                           influencerid),
                   headers: headers);
               if (res.statusCode == 200) {

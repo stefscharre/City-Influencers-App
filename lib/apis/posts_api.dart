@@ -50,7 +50,7 @@ class PostsApi {
 
         Response res = await post(
             Uri.parse(
-                "http://api-ci.westeurope.cloudapp.azure.com:8080/api/posts"),
+                "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/posts"),
             body: jsonEncode(createPost),
             headers: headers);
 

@@ -1,3 +1,4 @@
+
 // ignore_for_file: file_names
 
 import 'package:city_influencers_app/apis/influencer_api.dart';
@@ -22,11 +23,13 @@ class _HomeBackgroundWidget extends State<HomeBackgroundWidget> {
   @override
   void initState() {
     super.initState();
-    influencer = InfluencerApi().getInfluencer().then((value) {
+    InfluencerApi().getInfluencer().then((value) {
       setState(() {
         points = value!.aantalpunten!;
       });
     });
+
+     influencer = InfluencerApi().getInfluencer();
   }
 
   @override

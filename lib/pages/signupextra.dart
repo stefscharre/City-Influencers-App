@@ -71,7 +71,6 @@ class _SignUpExtra extends State<SignUpExtra> {
   }
 
   void _getinfluencer() {
-    print("doet het");
     InfluencerApi().getInfluencer().then((result) {
       setState(() {
         influencer = result;
@@ -283,7 +282,6 @@ class _SignUpExtra extends State<SignUpExtra> {
     if (influencer!.familienaam != null) {
       InfluencerApi().updateInfluencer(influencer!);
     } else {
-      print("fail");
     }
   }
 
@@ -297,7 +295,6 @@ class _SignUpExtra extends State<SignUpExtra> {
       initialDatePickerMode: DatePickerMode.year,
     );
     if (selected != null && selected != selectedDate) {
-      print(DateFormat('yyyy-MM-dd hh:mm:ss').format(selected));
       influencer!.geboortedatum =
           DateFormat('yyyy-MM-dd hh:mm:ss').format(selected);
       setState(() {
