@@ -51,6 +51,7 @@ class InfluencerApi {
             value: data.token,
             iOptions: _getIOSOptions(),
             aOptions: _getAndroidOptions());
+            
 
         return data;
       }
