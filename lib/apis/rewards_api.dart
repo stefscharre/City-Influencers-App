@@ -52,8 +52,6 @@ class RewardsApi {
 
             RewardApiResponse data = RewardApiResponse.fromJson(jsonRes);
 
-            print("got here");
-            print("or heerrerr hahha");
             print(data.data[0]);
 
             List<RewardInfo> rewards = [];

@@ -1,21 +1,21 @@
 class Campaign {
-  final String id;
-  final String winnaarid;
-  final String stadid;
-  final String titel;
-  final String omschrijving;
-  final String aantalpuntenwaard;
-  final String isuitgevoerd;
-  final String datumopgegeven;
-  final String datumuitgevoerd;
-  final String foto;
-  final List<String> categories;
+  final String? id;
+  final String? winnaarid;
+  final String? stadid;
+  final String? titel;
+  final String? omschrijving;
+  final String? aantalpuntenwaard;
+  final String? isuitgevoerd;
+  final String? datumopgegeven;
+  final String? datumuitgevoerd;
+  final String? foto;
+  final List<dynamic>? categories;
 
 
 
 
-  Campaign({required this.id, required this.winnaarid, required this.stadid, required this.titel, required this.omschrijving, required this.aantalpuntenwaard, required this.isuitgevoerd, 
-  required this.datumopgegeven, required this.datumuitgevoerd, required this.foto, required this.categories});
+  Campaign({this.id, this.winnaarid, this.stadid, this.titel, this.omschrijving, this.aantalpuntenwaard, this.isuitgevoerd, 
+  this.datumopgegeven, this.datumuitgevoerd, this.foto, this.categories});
   
   factory Campaign.fromJson(Map<String, dynamic> json) {
     return Campaign(

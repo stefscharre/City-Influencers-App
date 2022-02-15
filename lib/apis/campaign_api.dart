@@ -10,8 +10,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-class CampaignApi{
-   final secureStorage = const FlutterSecureStorage();
+class CampaignApi {
+  final secureStorage = const FlutterSecureStorage();
   IOSOptions _getIOSOptions() => const IOSOptions(
         accessibility: IOSAccessibility.first_unlock,
       );
@@ -19,7 +19,7 @@ class CampaignApi{
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true,
       );
-Future<String> readSecureToken() async {
+  Future<String> readSecureToken() async {
     String value = "";
     try {
       value = (await secureStorage.read(
@@ -33,38 +33,45 @@ Future<String> readSecureToken() async {
 
     return value;
   }
-     Future<List<Campaign>> fetchCampaigns(){
-  return readSecureToken().then((String result) async {
+
+  Future<List<Campaign>> fetchCampaigns() {
+    return readSecureToken().then((String result) async {
       try {
         String token = result;
         if (token != null) {
           Map<String, String> headers = {
             "Authorization": "Bearer $token",
           };
-      Response res = await get(Uri.parse("http://api-ci.westeurope.cloudapp.azure.com:8080/api/tasks"));
-      if (res.statusCode == 200) {
-         final jsonRes = json.decode(res.body);
-            print(jsonRes);
-        //CityApiResponse body = jsonDecode(res.body);
+          Response res = await get(
+              Uri.parse(
+                  "http://api-ci.westeurope.cloudapp.azure.com:8080/api/tasks"),
+              headers: headers);
+          if (res.statusCode == 200) {
+            final jsonRes = json.decode(res.body);
+            //CityApiResponse body = jsonDecode(res.body);
 
-ApiResponse data = ApiResponse.fromJson(jsonRes);
-        // ignore: unused_local_variable
-        List<Campaign> campaigns = [];
+            ApiResponse data = ApiResponse.fromJson(jsonRes);
+            // ignore: unused_local_variable
+            List<Campaign> campaigns = [];
+            print(data.data[0]);
 
             for (var element in data.data) {
+              print("testtttttttttttttttttttttt");
               print(element);
-              final reward = Campaign.fromJson(element);
-              campaigns.add(reward);
+              final campaign = Campaign.fromJson(element);
+              campaigns.add(campaign);
             }
-        return campaigns;
-
-      } else {
-        throw "Unable to retrieve campaigns.";
-      }
-    }
-    
-  } catch (e) {
+            return campaigns;
+          } else {
+            throw "Unable to retrieve campaigns.";
+          }
+        }
+      } catch (e) {
         print("this catch");
         print(e);
         rethrow;
-      }throw "Latest throw";});}}
+      }
+      throw "Latest throw";
+    });
+  }
+}

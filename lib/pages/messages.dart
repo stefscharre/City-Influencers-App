@@ -100,7 +100,7 @@ class _MessagePage extends State<Messages> {
            child: CampaignWidget(
                   imageurl: 'assets/biefstukFriet.jpg',
                   text: cityList[position].naam,
-                  price: 250)
+                  price: "change this!")
         );
       },
     );

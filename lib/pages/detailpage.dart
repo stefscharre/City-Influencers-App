@@ -7,7 +7,17 @@ import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+
+  final String imageurl;
+  final String title;
+  final String price;
+  final String description;
+
+  const DetailPage({Key? key, 
+  required this.imageurl,
+  required this.title,
+  required this.price,
+  required this.description}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DetailPage();
@@ -30,14 +40,23 @@ class _DetailPage extends State<DetailPage> {
             Row(children: <Widget>[
               HomeBackgroundWidget(),
             ]),
-            Padding(
-              padding:  EdgeInsets.only(top: 3.h),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25), 
-  child: SizedBox.fromSize(
-           child: Image.asset('assets/biefstukFriet.jpg', width: 55.w, fit: BoxFit.cover)),
-),
-            ),
+            Container(
+                          width: 13.h,
+                          height: 13.h,
+                          child: Column(children: const <Widget>[
+                            Icon(Icons.campaign_sharp, size: 60),
+                            Text("Campaign")
+                          ]),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: NetworkImage(
+                                    widget.imageurl,
+                                  )),
+                              border:
+                                  Border.all(color: Colors.white, width: 3.0)),
+                        ),
             Padding(
               padding:  EdgeInsets.fromLTRB(0,2.h,0,2.h),
               child: Row(
@@ -47,12 +66,12 @@ class _DetailPage extends State<DetailPage> {
 
                     SizedBox(
                       width: 40.w,
-                      child: const Text("Restaurant bij den Steak",style: TextStyle(fontSize: 24,
+                      child: Text(widget.title,style: const TextStyle(fontSize: 24,
                           fontWeight: FontWeight.bold, color: Colors.black),),
                     ),
 
                   
-                  Text("€250",style: TextStyle(fontSize: 24,
+                  Text(widget.price + " points",style: TextStyle(fontSize: 24,
                       fontWeight: FontWeight.bold, color: color3),),
                 ]),
             ),
@@ -71,7 +90,7 @@ class _DetailPage extends State<DetailPage> {
                  children: [
                    Padding(
                     padding: EdgeInsets.fromLTRB(7.w,0,7.w,0),
-                     child: SizedBox(width: 86.w, child: const Text("Een tekst is, ruim gedefinieerd, een reeks talige tekens, zoals letters, symbolen of klanken, die in een communicatieve situatie als een geheel wordt ervaren. Een tekst kan dus zowel geschreven als ongeschreven zijn.")),
+                     child: SizedBox(width: 86.w, child: Text(widget.description)),
                    ),
                  ],
                ),
