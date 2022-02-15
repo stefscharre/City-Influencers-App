@@ -106,7 +106,8 @@ class _HomePage extends State<Home> {
                 description: campaignList![position].omschrijving ?? "No description",
                 imageurl: campaignList![position].foto ?? "no photo",
                 text: campaignList![position].titel ?? "No title",
-                price: campaignList![position].aantalpuntenwaard ?? "No points"
+                price: campaignList![position].aantalpuntenwaard ?? "No points",
+                campaign: campaignList![position]
                 ));
       },
     );
