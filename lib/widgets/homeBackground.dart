@@ -1,4 +1,3 @@
-
 // ignore_for_file: file_names
 
 import 'package:city_influencers_app/apis/influencer_api.dart';
@@ -9,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class HomeBackgroundWidget extends StatefulWidget {
-  const HomeBackgroundWidget({Key? key}) : super(key: key);
+  final String? points;
+
+  const HomeBackgroundWidget({Key? key, this.points}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeBackgroundWidget();
@@ -19,6 +20,7 @@ class _HomeBackgroundWidget extends State<HomeBackgroundWidget> {
   Color color1 = HexColor("#4C525C");
   late Future<Influencer?> influencer;
   String points = "";
+  bool pointCounter = false;
 
   @override
   void initState() {
@@ -29,7 +31,21 @@ class _HomeBackgroundWidget extends State<HomeBackgroundWidget> {
       });
     });
 
-     influencer = InfluencerApi().getInfluencer();
+    if (widget.points == null) {
+      print("test");
+      setState(() {
+        pointCounter = true;
+      });
+    }
+
+    if (widget.points != null) {
+      print("testing");
+      pointCounter = false;
+    }
+
+    print(pointCounter);
+
+    influencer = InfluencerApi().getInfluencer();
   }
 
   @override
@@ -86,26 +102,19 @@ class _HomeBackgroundWidget extends State<HomeBackgroundWidget> {
                           List<Widget> children;
                           if (snapshot.hasData) {
                             children = <Widget>[
-
                               Container(
                                 width: 13.h,
                                 height: 13.h,
                                 decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                snapshot.data!.profielfoto!,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                          snapshot.data!.profielfoto!,
+                                        )),
+                                    border: Border.all(
+                                        color: Colors.white, width: 3.0)),
                               )
-                                  ),
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 3.0
-                                  )
-                                ),
-                              )
-
-                              
                             ];
                           } else if (snapshot.hasError) {
                             children = <Widget>[
@@ -142,22 +151,26 @@ class _HomeBackgroundWidget extends State<HomeBackgroundWidget> {
                       ),
                     ),
                   ),
-                  
                 ],
               ),
-                  Center(
-                    
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(right: 15.w),
-                        child: Text(points + " points", style: TextStyle(
-                          fontSize: 20,
-                        )),
-                      )
-                    ],)
-                  ),
+              Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 15.w),
+                    child: pointCounter == false
+                        ? Text(widget.points.toString() + " points",
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ))
+                        : Text(points + " points",
+                            style: const TextStyle(
+                              fontSize: 20,
+                            )),
+                  )
+                ],
+              )),
             ])));
   }
 }
