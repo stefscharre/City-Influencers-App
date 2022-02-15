@@ -64,7 +64,6 @@ final facebookController = TextEditingController();
     _getinfluencer();
   }
   void _getinfluencer() {
-    print("doet het");
     InfluencerApi().getInfluencer().then((result) {
       setState(() {
         influencer = result;

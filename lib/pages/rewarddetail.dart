@@ -52,7 +52,6 @@ class _RewardDetailPage extends State<RewardDetail> {
   final secureStorage = const FlutterSecureStorage();
 
   Timer claimCheckTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-    print("checking QR code availability");
   });
 
   Influencer? influencer;
@@ -120,7 +119,6 @@ class _RewardDetailPage extends State<RewardDetail> {
         message = "Reward claimed";
         var newPoints = (infPoints - points);
         influencer!.aantalpunten = newPoints.toString();
-        print(widget.id);
 
         RewardsApi()
             .claimReward(widget.id)

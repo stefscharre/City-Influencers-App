@@ -106,15 +106,6 @@ class CampaignWidget extends StatelessWidget {
                             Icon(Icons.campaign_sharp, size: 60),
                             Text("Campaign")
                           ]),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                    imageurl,
-                                  )),
-                              border:
-                                  Border.all(color: Colors.white, width: 3.0)),
                         ),
                       )
                     : Padding(

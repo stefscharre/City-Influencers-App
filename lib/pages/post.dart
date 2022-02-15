@@ -61,8 +61,7 @@ class _PostPage extends State<Post> {
         pictureController.text = response.secureUrl;
       }
     } on CloudinaryException catch (e) {
-      print(e.message);
-      print(e.request);
+
     }
   }
 

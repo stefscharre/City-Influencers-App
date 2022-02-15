@@ -43,7 +43,7 @@ class RewardsApi {
 
           Response res = await get(
               Uri.parse(
-                  "http://api-ci.westeurope.cloudapp.azure.com:8080/api/rewards"),
+                  "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/rewards"),
               headers: headers);
 
           if (res.statusCode == 200) {
@@ -87,7 +87,7 @@ class RewardsApi {
 
         Response res = await put(
             Uri.parse(
-                "http://api-ci.westeurope.cloudapp.azure.com:8080/api/rewards"),
+                "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/rewards"),
             body: jsonEncode(rewardUpdate),
             headers: headers);
 

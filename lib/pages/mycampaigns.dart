@@ -41,7 +41,6 @@ class _MyCampaigns extends State<MyCampaigns> {
     CampaignApi().fetchCampaigns().then((result) {
       setState(() {
         campaignList = result;
-        print(campaignList!.length);
         count = campaignList!.length;
       });
     });

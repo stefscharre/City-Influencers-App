@@ -173,7 +173,7 @@ final nameController = TextEditingController();
                                 child: IconButton(
                                   icon: const Icon(Icons.arrow_forward_sharp),
                                   color: Colors.black,
-                                  onPressed: () {InfluencerApi().postInfluencer(emailController.text, nameController.text, passwordController.text).then((value) {print("5");_navigateToExtra();});   }
+                                  onPressed: () {InfluencerApi().postInfluencer(emailController.text, nameController.text, passwordController.text).then((value) {_navigateToExtra();});   }
                                 ),
                               ),
                             ),
