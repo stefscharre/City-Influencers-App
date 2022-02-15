@@ -161,11 +161,8 @@ class _LoginPage extends State<Login> {
                                   icon: const Icon(Icons.arrow_forward_sharp),
                                   color: Colors.black,
                                   onPressed: () {
-                                    InfluencerApi()
-                                        .postLogin(
-                                            nameController.text, passwordController.text)
-                                        .then((value) => {
-                                              if (value.token == "")
+                                    InfluencerApi().postLogin(nameController.text, passwordController.text).then((value) => {
+                                              if (value.creationtime == "")
                                                 {
                                                   setState(() {
                                                     errorMessage =

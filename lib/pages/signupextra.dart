@@ -88,11 +88,11 @@ class _SignUpExtra extends State<SignUpExtra> {
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                  alignment: Alignment.topCenter,
+                    alignment: Alignment.topCenter,
                     image: AssetImage("assets/BackgroundSignup.png"),
                     fit: BoxFit.fitWidth)),
-                    child: SingleChildScrollView(
-            child: Column(
+            child: SingleChildScrollView(
+                child: Column(
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -116,7 +116,7 @@ class _SignUpExtra extends State<SignUpExtra> {
                           child: SizedBox(
                             width: 50.w,
                             child: const Text(
-                              "Name",
+                              "Extra info",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   fontSize: 46.0,
@@ -175,31 +175,36 @@ class _SignUpExtra extends State<SignUpExtra> {
                           ),
                         ),
                         SizedBox(
-                          width: 40.w,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: color1,
-                                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(20), // <-- Radius
+                            width: 40.w,
+                            child: Column(
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: color1,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 4.w, vertical: 1.5.h),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            20), // <-- Radius
+                                      ),
+                                      textStyle: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.white)),
+                                  onPressed: () {
+                                    _selectDate(context);
+                                  },
+                                  child:
+                                      Text(date == "" ? "Choose Date" : date),
                                 ),
-                                textStyle: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white)),
-                            onPressed: () {
-                              _selectDate(context);
-                            },
-                            child: const Text("Choose Date"),
-                          ),
-                        ),
+                              ],
+                            )),
                         SizedBox(
                           width: 50.w,
                           child: Row(
                             children: <Widget>[
                               Padding(
-                                padding:  EdgeInsets.fromLTRB(0,2.w,5.w,0),
+                                padding: EdgeInsets.fromLTRB(0, 2.w, 5.w, 0),
                                 child: const Text(
                                   'Gender',
                                   style: TextStyle(
@@ -270,7 +275,8 @@ class _SignUpExtra extends State<SignUpExtra> {
   }
 
   void _updateInfluencer() {
-    influencer!.familienaam = naamController.text; // show the user info using the TextEditingController's
+    influencer!.familienaam = naamController
+        .text; // show the user info using the TextEditingController's
     influencer!.voornaam = voornaamController.text;
     influencer!.geslacht = geslachtController.text;
 
@@ -287,13 +293,16 @@ class _SignUpExtra extends State<SignUpExtra> {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(1900),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(2023),
       initialDatePickerMode: DatePickerMode.year,
     );
     if (selected != null && selected != selectedDate) {
       print(DateFormat('yyyy-MM-dd hh:mm:ss').format(selected));
       influencer!.geboortedatum =
           DateFormat('yyyy-MM-dd hh:mm:ss').format(selected);
+      setState(() {
+        date = DateFormat('yyyy-MM-dd').format(selected);
+      });
     }
   }
 }

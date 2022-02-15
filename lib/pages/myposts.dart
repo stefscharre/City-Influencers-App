@@ -5,7 +5,7 @@ import 'package:city_influencers_app/models/influencer.dart';
 
 import 'package:city_influencers_app/models/influencerApiResponse.dart';
 import 'package:city_influencers_app/pages/signup.dart';
-
+import 'package:insta_public_api/insta_public_api.dart';
 import 'package:city_influencers_app/widgets/bottomMenu.dart';
 import 'package:city_influencers_app/widgets/campaign.dart';
 import 'package:city_influencers_app/widgets/postWidget.dart';

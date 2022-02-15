@@ -39,7 +39,7 @@ class InfluencerApi {
       Map<String, dynamic> map = json.decode(res.body);
       print(map.values);
       if (map.values.last == "AuthCredsInvalid") {
-        print("wrond login provided");
+        print("wrong login provided");
         return LoginData(token: "", creationtime: "", expiretime: "");
       } else {
         LoginData data = LoginData.fromJson(map.values.last);
@@ -167,7 +167,6 @@ class InfluencerApi {
           Map<String, String> headers = {
             "Authorization": "Bearer $token",
           };
-        print("1");
           Response res = await get(
               Uri.parse(
                   "http://api-ci.westeurope.cloudapp.azure.com:8080/api/me"),
@@ -176,10 +175,10 @@ class InfluencerApi {
             Map<String, dynamic> map = json.decode(res.body);
 
             //map.forEach((k, v) => debugPrint('$k: $v'));
-print("2");
+
             TokenValidation data = TokenValidation.fromJson(map["data"]);
             String influencerid = data.id;
-print("3");
+
             if (influencerid != "") {
               Response res = await get(
                   Uri.parse(
@@ -187,11 +186,11 @@ print("3");
                           influencerid),
                   headers: headers);
               if (res.statusCode == 200) {
-                print("4");
+
                 final responseJson = json.decode(res.body);
                 InfluencerApiResponse influencer =
                     InfluencerApiResponse.fromJson(responseJson);
-                    print("5");
+
                 Influencer influencerData = Influencer(
                     id: influencer.data[0]["id"],
                     wachtwoord: influencer.data[0]["wachtwoord"],

@@ -11,9 +11,10 @@ import 'package:city_influencers_app/widgets/sidemenu.dart';
 import 'package:city_influencers_app/apis/city_api.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:insta_public_api/insta_public_api.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
-
+import 'package:flutter_insta/flutter_insta.dart';
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -26,6 +27,10 @@ class _ProfilePage extends State<Profile> {
   Color color2 = HexColor("#EBEBEB");
 
   Color color3 = HexColor("#4C525C");
+  final ipa = InstaPublicApi('stefscharre');
+  late final info =  ipa.getBasicInfo();
+  FlutterInsta flutterInsta =  FlutterInsta();
+  String?  followers = " ";
   Influencer? influencer;
   TextEditingController adressController = TextEditingController();
   TextEditingController postcodeController = TextEditingController();
@@ -68,8 +73,14 @@ class _ProfilePage extends State<Profile> {
           );
     });
     _getinfluencer();
+    printDetails("stefscharre");
   }
-
+Future printDetails(String username) async {
+    await flutterInsta.getProfileData(username);
+    setState(() {
+      followers = flutterInsta.followers; //number of followers
+    });
+  }
   void _getinfluencer() {
     print("doet het");
     InfluencerApi().getInfluencer().then((result) {
@@ -112,7 +123,7 @@ class _ProfilePage extends State<Profile> {
           const Align(alignment: Alignment.bottomCenter, child: MenuWidget())
         ]));
   }
-
+ 
   void _saveInfluencer() {
     influencer!.adres = adressController
         .text; // show the user info using the TextEditingController's
@@ -189,8 +200,8 @@ class _ProfilePage extends State<Profile> {
                     'assets/instagram.png',
                     height: 5.h,
                   ),
-                  const Text("120",
-                      style: TextStyle(
+                   Text("$followers",
+                      style:const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
