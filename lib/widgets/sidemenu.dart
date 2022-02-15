@@ -82,7 +82,7 @@ class NavDrawer extends StatelessWidget {
           
           children: [
             SizedBox(
-          height: 28.h,
+          height: 24.5.h,
             child:  DrawerHeader(
               decoration: BoxDecoration(
                 color: color1,
