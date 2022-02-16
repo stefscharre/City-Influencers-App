@@ -52,7 +52,6 @@ class PostsApi {
           if (res.statusCode == 200) {
             Map<String, dynamic> map = json.decode(res.body);
 
-            //map.forEach((k, v) => debugPrint('$k: $v'));
 
             TokenValidation data = TokenValidation.fromJson(map["data"]);
             String influencerid = data.id;
@@ -64,21 +63,17 @@ class PostsApi {
 
           if (res.statusCode == 200) {
             final jsonRes = json.decode(res2.body);
-            print(jsonRes);
 
             ApiResponse data = ApiResponse.fromJson(jsonRes);
 
-            print(data.data[0]);
 
             List<PostData> posts = [];
 
             for (var post in data.data) {
-              print(post);
               final postData = PostData.fromJson(post);
               posts.add(postData);
             }
 
-            print(posts);
 
             return posts;
           }
@@ -105,6 +100,7 @@ class PostsApi {
           'description': postData.beschrijving,
           'picture': postData.foto
           };
+
 
         Response res = await post(
             Uri.parse(

@@ -53,7 +53,6 @@ class CampaignApi {
             ApiResponse data = ApiResponse.fromJson(jsonRes);
             // ignore: unused_local_variable
             List<Campaign> campaigns = [];
-            print(data.data[0]);
 
             for (var element in data.data) {
               final campaign = Campaign.fromJson(element);

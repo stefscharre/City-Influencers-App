@@ -113,9 +113,6 @@ class _RewardDetailPage extends State<RewardDetail> {
 
     var infPoints = int.parse(influencer!.aantalpunten!);
     var points = int.parse(rewardPoints);
-    print("pointsssssssssss");
-    print(infPoints);
-    print(points);
     if (infPoints >= points) {
 
       setState(() {
