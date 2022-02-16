@@ -30,18 +30,14 @@ class InfluencerApi {
       'type': "influencer"
     };
 
-    print(login);
 
     Response res = await post(
       Uri.parse("http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/login"),
       body: login,
     );
-    print(res.body);
     if (res.statusCode == 200) {
       Map<String, dynamic> map = json.decode(res.body);
-      print(map.values);
       if (map.values.last == "AuthCredsWrong") {
-        print("wrong login provided");
         return LoginData(token: "", creationtime: "", expiretime: "");
       } else {
         LoginData data = LoginData.fromJson(map.values.last);
@@ -74,7 +70,6 @@ class InfluencerApi {
           "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/register"),
       body: signup,
     );
-    print(res.body);
     if (res.statusCode == 200) {
       return postLogin(username, password).then((value) {
         
@@ -88,7 +83,6 @@ class InfluencerApi {
   }
 
   Future<Influencer?> updateInfluencer(Influencer influencer) {
-    print("updating...");
     final update = {
       'id': influencer.id,
       'wachtwoord': influencer.wachtwoord,
@@ -113,7 +107,6 @@ class InfluencerApi {
       'profilepicture': influencer.profielfoto
 
     };
-    print(update);
     return readSecureToken().then((String result) async {
       try {
         String token = result;
@@ -122,9 +115,6 @@ class InfluencerApi {
             "Content-Type":"application/json",
             "Authorization": "Bearer $token",
           };
-        print(token);
-        print(update['id']);
-        print(influencer.adres);
           Response res = await put(
             Uri.parse(
                 "http://api-cityinfluencers.westeurope.cloudapp.azure.com:8080/api/accounts"),
@@ -133,14 +123,12 @@ class InfluencerApi {
             
           );
           if (res.statusCode == 200) {  
-            print(res.body);    
            
           } else {
             throw Exception('Failed to update user');
           }
         }
       } catch (e) {
-        print("werkt niet");
         print(e);
         rethrow;
       }
@@ -177,7 +165,6 @@ class InfluencerApi {
           if (res.statusCode == 200) {
             Map<String, dynamic> map = json.decode(res.body);
 
-            //map.forEach((k, v) => debugPrint('$k: $v'));
 
             TokenValidation data = TokenValidation.fromJson(map["data"]);
             String influencerid = data.id;
@@ -230,7 +217,6 @@ class InfluencerApi {
           }
         }
       } catch (e) {
-        print("vind influencer niet");
         print(e);
         rethrow;
       }

@@ -58,7 +58,10 @@ class _PostPage extends State<Post> {
           CloudinaryFile.fromFile(image.path,
               folder: "Posts", resourceType: CloudinaryResourceType.Image),
         );
-        pictureController.text = response.secureUrl;
+        setState(() {
+          pictureController.text = response.secureUrl;
+
+        });
       }
     } on CloudinaryException catch (e) {
 

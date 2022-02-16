@@ -48,21 +48,17 @@ class RewardsApi {
 
           if (res.statusCode == 200) {
             final jsonRes = json.decode(res.body);
-            print(jsonRes);
 
             RewardApiResponse data = RewardApiResponse.fromJson(jsonRes);
 
-            print(data.data[0]);
 
             List<RewardInfo> rewards = [];
 
             for (var element in data.data) {
-              print(element);
               final reward = RewardInfo.fromJson(element);
               rewards.add(reward);
             }
 
-            print(rewards);
 
             return rewards;
           }
